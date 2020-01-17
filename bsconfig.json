@@ -1,0 +1,28 @@
+{
+  "name": "@rohea/re-polished",
+  "reason": {
+    "react-jsx": 3
+  },
+  "bsc-flags": [
+    "-bs-super-errors"
+  ],
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "examples",
+      "subdirs": true
+    }
+  ],
+  "bs-dependencies": [
+    "bs-css",
+    "reason-react"
+  ],
+  "package-specs": {
+    "module": "commonjs"
+  },
+  "suffix": ".bs.js",
+  "refmt": 3
+}

@@ -1,0 +1,1 @@
+module Color = BsPolished__Color;
