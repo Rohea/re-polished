@@ -21,7 +21,7 @@
     "reason-react"
   ],
   "package-specs": {
-    "module": "commonjs"
+    "module": "es6"
   },
   "suffix": ".bs.js",
   "refmt": 3
