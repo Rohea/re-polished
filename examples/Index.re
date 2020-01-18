@@ -5,7 +5,7 @@ module Test = {
     let getRedBoxTransparentize = () =>
       style([
         backgroundColor(
-          BsPolished.Color.transparentize(2.5, rgba(255, 0, 0, 1.0)),
+          BsPolished.Color.transparentize(0.5, rgba(255, 0, 0, 1.0)),
         ),
       ]);
   };
