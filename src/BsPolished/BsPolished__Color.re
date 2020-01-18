@@ -1,10 +1,11 @@
 module Utils = {
-  let cssToColor = (cssColor: Css.Types.Color.t): RePolished.Types.color => {
-    RePolished.Types.(
+  let cssToColor =
+      (cssColor: Css.Types.Color.t): option(RePolished.Types.color) => {
+    RePolished.(
       switch (cssColor) {
-      | `rgb(r, g, b) => RGB({red: r, green: g, blue: b})
-      | `rgba(r, g, b, a) => RGBA({red: r, green: g, blue: b, alpha: a})
-      | `hex(str) => HEX({value: str})
+      | `rgb(r, g, b) => RGB.make(~red=r, ~green=g, ~blue=b)
+      | `rgba(r, g, b, a) => RGBA.make(~red=r, ~green=g, ~blue=b, ~alpha=a)
+      | `hex(str) => HEX.make(~value=str)
       | `hsl(h, s, l) =>
         let deg: float =
           switch (h) {
@@ -13,18 +14,18 @@ module Utils = {
           | `deg(f) => f
           | `rad(f) => f // WRONG!!!
           };
-        HSL({
-          hue: deg,
-          saturation:
+        HSL.make(
+          ~hue=deg,
+          ~saturation=
             switch (s) {
             | `percent(f) => f
             },
-          lightness:
+          ~lightness=
             switch (l) {
             | `percent(f) => f
             },
-        });
-      | _ => RePolished.Types.RGBA({red: 0, green: 0, blue: 0, alpha: 1.0}) // TODO: REMOVE
+        );
+      | _ => None
       }
     );
   };
@@ -51,8 +52,17 @@ module Utils = {
 
 let transparentize =
     (percentage: float, cssColor: Css.Types.Color.t): Css.Types.Color.t => {
-  let color = Utils.cssToColor(cssColor);
-  let tr = RePolished.Color.Transparentize.transparentize(percentage, color);
-  let cssColor = Utils.colorToCss(tr);
-  cssColor;
+  let maybeColor = Utils.cssToColor(cssColor);
+  let maybePercent = RePolished.Types.Percent.make(percentage);
+  switch (maybePercent, maybeColor) {
+  | (Some(p), Some(c)) =>
+    let tr = RePolished.Color.Transparentize.transparentize(p, c);
+    let newColor = Utils.colorToCss(tr);
+    newColor;
+  | _ =>
+    Js.log(
+      "Transparentize failed. Given percentage or css color was invalid",
+    );
+    cssColor;
+  };
 };

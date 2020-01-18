@@ -1,6 +1,6 @@
 open RePolished__Types;
 
-let transparentize = (percentage: float, color: color): color => {
+let transparentize = (percentage: Percent.t, color: color): color => {
   switch (color) {
   | HEX(hex) => HEX(hex)
   | RGB(rgb) => RGB(rgb)
