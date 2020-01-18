@@ -1,13 +1,32 @@
 module Utils = {
   let cssToColor = (cssColor: Css.Types.Color.t): RePolished.Types.color => {
-    switch (cssColor) {
-    | `hex(str) =>
-      let hex = RePolished.Types.HEX({value: str});
-      RePolished.Types.RGBA({red: 0, green: 0, blue: 0, alpha: 1.0});
-    | `rgba(r, g, b, a) =>
-      RePolished.Types.RGBA({red: r, green: g, blue: b, alpha: a})
-    | _ => RePolished.Types.RGBA({red: 0, green: 0, blue: 0, alpha: 1.0}) // TODO: REMOVE
-    };
+    RePolished.Types.(
+      switch (cssColor) {
+      | `rgb(r, g, b) => RGB({red: r, green: g, blue: b})
+      | `rgba(r, g, b, a) => RGBA({red: r, green: g, blue: b, alpha: a})
+      | `hex(str) => HEX({value: str})
+      | `hsl(h, s, l) =>
+        let deg: float =
+          switch (h) {
+          | `grad(f) => f // WRONG!!!
+          | `turn(f) => f // WRONG!!!
+          | `deg(f) => f
+          | `rad(f) => f // WRONG!!!
+          };
+        HSL({
+          hue: deg,
+          saturation:
+            switch (s) {
+            | `percent(f) => f
+            },
+          lightness:
+            switch (l) {
+            | `percent(f) => f
+            },
+        });
+      | _ => RePolished.Types.RGBA({red: 0, green: 0, blue: 0, alpha: 1.0}) // TODO: REMOVE
+      }
+    );
   };
 
   let colorToCss = (color: RePolished.Types.color): Css.Types.Color.t => {
