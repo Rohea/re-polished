@@ -1,9 +1,13 @@
 module Utils = {
   let cssToColor =
-      (cssColor: Css.Types.Color.t): option(RePolished.Types.color) => {
-    RePolished.(
+      (cssColor: Css.Types.Color.t): option(Polished.Types.color) => {
+    Polished.Types.(
       switch (cssColor) {
-      | `rgb(r, g, b) => RGB.make(~red=r, ~green=g, ~blue=b)
+      | `rgb(r, g, b) =>
+        switch (RGB.make(~red=r, ~green=g, ~blue=b)) {
+        | Some(rgb) => Polished.Types.RGB(rgb)
+        | None => None
+        }
       | `rgba(r, g, b, a) => RGBA.make(~red=r, ~green=g, ~blue=b, ~alpha=a)
       | `hex(str) => HEX.make(~value=str)
       | `hsl(h, s, l) =>
@@ -30,8 +34,8 @@ module Utils = {
     );
   };
 
-  let colorToCss = (color: RePolished.Types.color): Css.Types.Color.t => {
-    RePolished.Types.(
+  let colorToCss = (color: Polished.Types.color): Css.Types.Color.t => {
+    Polished.Types.(
       switch (color) {
       | RGB(rgb) => Css.rgb(rgb.red, rgb.green, rgb.blue)
       | RGBA(rgba) => Css.rgba(rgba.red, rgba.green, rgba.blue, rgba.alpha)
@@ -53,10 +57,10 @@ module Utils = {
 let transparentize =
     (percentage: float, cssColor: Css.Types.Color.t): Css.Types.Color.t => {
   let maybeColor = Utils.cssToColor(cssColor);
-  let maybePercent = RePolished.Types.Percent.make(percentage);
+  let maybePercent = Polished.Types.Percent.make(percentage);
   switch (maybePercent, maybeColor) {
   | (Some(p), Some(c)) =>
-    let tr = RePolished.Color.Transparentize.transparentize(p, c);
+    let tr = Polished.Color.Transparentize.transparentize(p, c);
     let newColor = Utils.colorToCss(tr);
     newColor;
   | _ =>

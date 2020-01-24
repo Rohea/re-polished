@@ -1,12 +1,12 @@
-open RePolished__Types;
+open Polished_Types;
 
 let transparentize = (percentage: Percent.t, color: color): color => {
   switch (color) {
   | HEX(hex) => HEX(hex)
   | RGB(rgb) => RGB(rgb)
   | RGBA(rgba) => RGBA({...rgba, alpha: percentage *. rgba.alpha})
-  | HSL(hsl) => HSL(hsl)
-  | HSLA(hsla) => HSLA(hsla)
+  // | HSL(hsl) => HSL(hsl)
+  // | HSLA(hsla) => HSLA(hsla)
   };
 };
 /*
