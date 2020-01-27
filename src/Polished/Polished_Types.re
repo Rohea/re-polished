@@ -5,6 +5,7 @@ module AbstractPrimitives = {
     type t;
     let make: int => t;
     let asInt: t => int;
+    let fromHEX: (char, char) => t;
   };
   module type Degree = {
     type t;
@@ -29,6 +30,9 @@ module Int8: AbstractPrimitives.Int8 = {
       value;
     };
   let asInt = t => t;
+  let fromHEX = (c0: char, c1: char): t => {
+    make(int_of_string("0x" ++ String.make(1, c0) ++ String.make(1, c1)));
+  };
 };
 
 module Degree: AbstractPrimitives.Degree = {
@@ -79,6 +83,7 @@ module AbstractColors = {
   module type HEX = {
     type t;
     let make: string => t;
+    let asTuple: t => (char, char, char, char, char, char);
     let asString: t => string;
   };
   module type HSL = {
@@ -152,9 +157,36 @@ module RGBA: AbstractColors.RGBA = {
 };
 
 module HEX: AbstractColors.HEX = {
-  type t = string;
-  let make = value => value;
-  let asString = value => value;
+  type t = (char, char, char, char, char, char);
+
+  let make = (value: string): t => {
+    let str = [|'0', '0', '0', '0', '0', '0'|];
+    String.mapi(
+      (index, character) =>
+        if (index < 6) {
+          str[index] = character;
+          character;
+        } else {
+          ' ';
+        },
+      value,
+    )
+    |> ignore;
+    let tuple = (str[0], str[1], str[2], str[3], str[4], str[5]);
+    tuple;
+  };
+  let asTuple = (tuple: t) => tuple;
+
+  let asString = (tuple: t): string =>
+    switch (tuple) {
+    | (c0, c1, c2, c3, c4, c5) =>
+      String.make(1, c0)
+      ++ String.make(1, c1)
+      ++ String.make(1, c2)
+      ++ String.make(1, c3)
+      ++ String.make(1, c4)
+      ++ String.make(1, c5)
+    };
 };
 
 module HSL: AbstractColors.HSL = {

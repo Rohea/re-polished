@@ -1,9 +1,25 @@
 open Polished_Types;
 
+module Utils = {
+  let transparentizeRGBtoRGBA = (rgb: RGB.t, percentage: Percent.t): color => {
+    RGBA(
+      RGBA.make(
+        ~red=RGB.red(rgb),
+        ~green=RGB.green(rgb),
+        ~blue=RGB.blue(rgb),
+        ~alpha=percentage,
+      ),
+    );
+  };
+};
+
 let transparentize = (percentage: Percent.t, color: color): color => {
   switch (color) {
-  | HEX(hex) => HEX(hex)
-  | RGB(rgb) => RGB(rgb)
+  | HEX(hex) =>
+    Polished_Color_Utils.convertHEXtoRGB(hex)
+    ->Utils.transparentizeRGBtoRGBA(percentage)
+
+  | RGB(rgb) => rgb->Utils.transparentizeRGBtoRGBA(percentage)
   | RGBA(rgba) =>
     RGBA(
       RGBA.make(

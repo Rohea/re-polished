@@ -85,7 +85,7 @@ module Utils = {
       }
     );
   };
-};
+}; // Utils
 
 let transparentize =
     (percentage: float, cssColor: Css.Types.Color.t): Css.Types.Color.t => {
