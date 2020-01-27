@@ -4,17 +4,16 @@ module Utils = {
     Polished.Types.(
       switch (cssColor) {
       | `rgb(r, g, b) =>
-        Some(Polished.Types.RGB(RGB.make(~red=r, ~green=g, ~blue=b)))
-      | `rgba(r, g, b, a) =>
-        Some(RGBA(RGBA.make(~red=r, ~green=g, ~blue=b, ~alpha=a)))
+        Some(Polished.Types.RGB(RGB.fromPrimitives(r, g, b)))
+      | `rgba(r, g, b, a) => Some(RGBA(RGBA.fromPrimitives(r, g, b, a)))
       | `hex(str) => Some(HEX(HEX.make(str)))
       | `hsl(h, s, l) =>
-        let deg: float =
+        let deg: Degree.t =
           switch (h) {
-          | `grad(f) => f // WRONG!!!
-          | `turn(f) => f // WRONG!!!
-          | `deg(f) => f
-          | `rad(f) => f // WRONG!!!
+          | `grad(f) => Degree.make(f *. 0.9)
+          | `turn(f) => Degree.make(f *. 360.0 /. pi)
+          | `deg(f) => Degree.make(f)
+          | `rad(f) => Degree.make(f *. 180.0 /. pi)
           };
         Some(
           HSL(
@@ -22,11 +21,11 @@ module Utils = {
               ~hue=deg,
               ~saturation=
                 switch (s) {
-                | `percent(f) => f
+                | `percent(f) => Percent.make(f)
                 },
               ~lightness=
                 switch (l) {
-                | `percent(f) => f
+                | `percent(f) => Percent.make(f)
                 },
             ),
           ),

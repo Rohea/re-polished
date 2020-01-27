@@ -1,3 +1,5 @@
+let pi: float = 3.141592653589793;
+
 module AbstractPrimitives = {
   module type Int8 = {
     type t;
@@ -15,6 +17,7 @@ module AbstractPrimitives = {
     let asFloat: t => float;
   };
 };
+
 module Int8: AbstractPrimitives.Int8 = {
   type t = int; // 0 - 255
   let make = (value: int): t =>
@@ -54,17 +57,20 @@ module Percent: AbstractPrimitives.Percent = {
   let asFloat = t => t;
 };
 
-module Abstract = {
+module AbstractColors = {
   module type RGB = {
     type t;
-    let make: (~red: int, ~green: int, ~blue: int) => t;
+    let make: (~red: Int8.t, ~green: Int8.t, ~blue: Int8.t) => t;
+    let fromPrimitives: (int, int, int) => t;
     let red: t => Int8.t;
     let green: t => Int8.t;
     let blue: t => Int8.t;
   };
   module type RGBA = {
     type t;
-    let make: (~red: int, ~green: int, ~blue: int, ~alpha: float) => t;
+    let make:
+      (~red: Int8.t, ~green: Int8.t, ~blue: Int8.t, ~alpha: Percent.t) => t;
+    let fromPrimitives: (int, int, int, float) => t;
     let red: t => Int8.t;
     let green: t => Int8.t;
     let blue: t => Int8.t;
@@ -77,7 +83,9 @@ module Abstract = {
   };
   module type HSL = {
     type t;
-    let make: (~hue: float, ~saturation: float, ~lightness: float) => t;
+    let make:
+      (~hue: Degree.t, ~saturation: Percent.t, ~lightness: Percent.t) => t;
+    let fromPrimitives: (float, float, float) => t;
     let hue: t => Degree.t;
     let saturation: t => Percent.t;
     let lightness: t => Percent.t;
@@ -85,7 +93,14 @@ module Abstract = {
   module type HSLA = {
     type t;
     let make:
-      (~hue: float, ~saturation: float, ~lightness: float, ~alpha: float) => t;
+      (
+        ~hue: Degree.t,
+        ~saturation: Percent.t,
+        ~lightness: Percent.t,
+        ~alpha: Percent.t
+      ) =>
+      t;
+    let fromPrimitives: (float, float, float, float) => t;
     let hue: t => Degree.t;
     let saturation: t => Percent.t;
     let lightness: t => Percent.t;
@@ -93,13 +108,16 @@ module Abstract = {
   };
 };
 
-module RGB: Abstract.RGB = {
+module RGB: AbstractColors.RGB = {
   type t = {
     red: Int8.t,
     green: Int8.t,
     blue: Int8.t,
   };
-  let make = (~red: int, ~green: int, ~blue: int) => {
+  let make = (~red, ~green, ~blue) => {
+    {red, green, blue};
+  };
+  let fromPrimitives = (red, green, blue) => {
     let r = Int8.make(red);
     let g = Int8.make(green);
     let b = Int8.make(blue);
@@ -110,14 +128,17 @@ module RGB: Abstract.RGB = {
   let blue = t => t.blue;
 };
 
-module RGBA: Abstract.RGBA = {
+module RGBA: AbstractColors.RGBA = {
   type t = {
     red: Int8.t,
     green: Int8.t,
     blue: Int8.t,
     alpha: Percent.t,
   };
-  let make = (~red: int, ~green: int, ~blue: int, ~alpha: float) => {
+  let make = (~red, ~green, ~blue, ~alpha) => {
+    {red, green, blue, alpha};
+  };
+  let fromPrimitives = (red, green, blue, alpha) => {
     let r = Int8.make(red);
     let g = Int8.make(green);
     let b = Int8.make(blue);
@@ -130,19 +151,22 @@ module RGBA: Abstract.RGBA = {
   let alpha = t => t.alpha;
 };
 
-module HEX: Abstract.HEX = {
+module HEX: AbstractColors.HEX = {
   type t = string;
   let make = value => value;
   let asString = value => value;
 };
 
-module HSL = {
+module HSL: AbstractColors.HSL = {
   type t = {
     hue: Degree.t,
     saturation: Percent.t,
     lightness: Percent.t,
   };
-  let make = (~hue: float, ~saturation: float, ~lightness: float) => {
+  let make = (~hue, ~saturation, ~lightness) => {
+    {hue, saturation, lightness};
+  };
+  let fromPrimitives = (hue, saturation, lightness) => {
     let h = Degree.make(hue);
     let s = Percent.make(saturation);
     let l = Percent.make(lightness);
@@ -153,15 +177,17 @@ module HSL = {
   let lightness = t => t.lightness;
 };
 
-module HSLA = {
+module HSLA: AbstractColors.HSLA = {
   type t = {
     hue: Degree.t,
     saturation: Percent.t,
     lightness: Percent.t,
     alpha: Percent.t,
   };
-  let make =
-      (~hue: float, ~saturation: float, ~lightness: float, ~alpha: float) => {
+  let make = (~hue, ~saturation, ~lightness, ~alpha) => {
+    {hue, saturation, lightness, alpha};
+  };
+  let fromPrimitives = (hue, saturation, lightness, alpha) => {
     let h = Degree.make(hue);
     let s = Percent.make(saturation);
     let l = Percent.make(lightness);
