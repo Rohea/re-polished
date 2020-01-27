@@ -93,19 +93,6 @@ module Abstract = {
   };
 };
 
-/*
- type hsl = {
-   hue: Degree.t,
-   saturation: Percent.t,
-   lightness: Percent.t,
- };
- type hsla = {
-   hue: Degree.t,
-   saturation: Percent.t,
-   lightness: Percent.t,
-   alpha: Percent.t,
- };
- */
 module RGB: Abstract.RGB = {
   type t = {
     red: Int8.t,
@@ -122,9 +109,6 @@ module RGB: Abstract.RGB = {
   let green = t => t.green;
   let blue = t => t.blue;
 };
-
-// let foo: RGB.t = Some(Types.RGB({red: 244, green: 234, blue: 123}));
-// let bar: RGB.t = RGB.make(~red=243, ~green=234, ~blue=123);
 
 module RGBA: Abstract.RGBA = {
   type t = {
@@ -196,10 +180,3 @@ type color =
   | HEX(HEX.t)
   | HSL(HSL.t)
   | HSLA(HSLA.t);
-
-/*
-
- module HSLA = {
-   type t = Types.hsla;
- };
- */
