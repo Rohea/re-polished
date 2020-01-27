@@ -1,1 +1,0 @@
-module Transparentize = RePolished__Color__Transparentize;
