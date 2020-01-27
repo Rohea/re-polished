@@ -4,7 +4,17 @@ let transparentize = (percentage: Percent.t, color: color): color => {
   switch (color) {
   | HEX(hex) => HEX(hex)
   | RGB(rgb) => RGB(rgb)
-  | RGBA(rgba) => RGBA({...rgba, alpha: percentage *. rgba.alpha})
+  | RGBA(rgba) =>
+    RGBA(
+      RGBA.make(
+        ~red=RGBA.red(rgba) |> Int8.asInt,
+        ~green=RGBA.green(rgba) |> Int8.asInt,
+        ~blue=RGBA.blue(rgba) |> Int8.asInt,
+        ~alpha=
+          (percentage |> Percent.asFloat)
+          *. (RGBA.alpha(rgba) |> Percent.asFloat),
+      ),
+    )
   // | HSL(hsl) => HSL(hsl)
   // | HSLA(hsla) => HSLA(hsla)
   };

@@ -4,12 +4,10 @@ module Utils = {
     Polished.Types.(
       switch (cssColor) {
       | `rgb(r, g, b) =>
-        switch (RGB.make(~red=r, ~green=g, ~blue=b)) {
-        | Some(rgb) => Polished.Types.RGB(rgb)
-        | None => None
-        }
-      | `rgba(r, g, b, a) => RGBA.make(~red=r, ~green=g, ~blue=b, ~alpha=a)
-      | `hex(str) => HEX.make(~value=str)
+        Some(Polished.Types.RGB(RGB.make(~red=r, ~green=g, ~blue=b)))
+      | `rgba(r, g, b, a) =>
+        Some(RGBA(RGBA.make(~red=r, ~green=g, ~blue=b, ~alpha=a)))
+      | `hex(str) => Some(HEX(HEX.make(str)))
       | `hsl(h, s, l) =>
         let deg: float =
           switch (h) {
@@ -18,16 +16,20 @@ module Utils = {
           | `deg(f) => f
           | `rad(f) => f // WRONG!!!
           };
-        HSL.make(
-          ~hue=deg,
-          ~saturation=
-            switch (s) {
-            | `percent(f) => f
-            },
-          ~lightness=
-            switch (l) {
-            | `percent(f) => f
-            },
+        Some(
+          HSL(
+            HSL.make(
+              ~hue=deg,
+              ~saturation=
+                switch (s) {
+                | `percent(f) => f
+                },
+              ~lightness=
+                switch (l) {
+                | `percent(f) => f
+                },
+            ),
+          ),
         );
       | _ => None
       }
@@ -37,17 +39,32 @@ module Utils = {
   let colorToCss = (color: Polished.Types.color): Css.Types.Color.t => {
     Polished.Types.(
       switch (color) {
-      | RGB(rgb) => Css.rgb(rgb.red, rgb.green, rgb.blue)
-      | RGBA(rgba) => Css.rgba(rgba.red, rgba.green, rgba.blue, rgba.alpha)
-      | HEX(hex) => Css.hex(hex.value)
+      | RGB(rgb) =>
+        Css.rgb(
+          RGB.red(rgb) |> Int8.asInt,
+          RGB.green(rgb) |> Int8.asInt,
+          RGB.blue(rgb) |> Int8.asInt,
+        )
+      | RGBA(rgba) =>
+        Css.rgba(
+          RGBA.red(rgba) |> Int8.asInt,
+          RGBA.green(rgba) |> Int8.asInt,
+          RGBA.blue(rgba) |> Int8.asInt,
+          RGBA.alpha(rgba) |> Percent.asFloat,
+        )
+      | HEX(hex) => Css.hex(HEX.asString(hex))
       | HSL(hsl) =>
-        Css.hsl(Css.Types.Angle.deg(hsl.hue), hsl.saturation, hsl.lightness)
+        Css.hsl(
+          Css.Types.Angle.deg(HSL.hue(hsl) |> Degree.asFloat),
+          HSL.saturation(hsl) |> Percent.asFloat,
+          HSL.lightness(hsl) |> Percent.asFloat,
+        )
       | HSLA(hsla) =>
         Css.hsla(
-          Css.Types.Angle.deg(hsla.hue),
-          hsla.saturation,
-          hsla.lightness,
-          `percent(hsla.alpha),
+          Css.Types.Angle.deg(HSLA.hue(hsla) |> Degree.asFloat),
+          HSLA.saturation(hsla) |> Percent.asFloat,
+          HSLA.lightness(hsla) |> Percent.asFloat,
+          `percent(HSLA.alpha(hsla) |> Percent.asFloat),
         )
       }
     );
@@ -57,10 +74,10 @@ module Utils = {
 let transparentize =
     (percentage: float, cssColor: Css.Types.Color.t): Css.Types.Color.t => {
   let maybeColor = Utils.cssToColor(cssColor);
-  let maybePercent = Polished.Types.Percent.make(percentage);
-  switch (maybePercent, maybeColor) {
-  | (Some(p), Some(c)) =>
-    let tr = Polished.Color.Transparentize.transparentize(p, c);
+  let percent = Polished.Types.Percent.make(percentage);
+  switch (maybeColor) {
+  | Some(c) =>
+    let tr = Polished.Color.Transparentize.transparentize(percent, c);
     let newColor = Utils.colorToCss(tr);
     newColor;
   | _ =>
