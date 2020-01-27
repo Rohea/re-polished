@@ -1,1 +1,0 @@
-module Color = BsPolished_Color;

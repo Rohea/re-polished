@@ -9,11 +9,9 @@
   },
   "scripts": {
     "build": "./node_modules/bs-platform/lib/bsb -make-world",
-    "start": "node lib/js/examples/Index.bs.js",
     "watch": "./node_modules/bs-platform/lib/bsb -make-world -w",
     "clean": "./node_modules/bs-platform/lib/bsb -clean-world",
-    "webpack": "webpack-dev-server",
-    "webpack:watch": "webpack -w"
+    "dev": "webpack-dev-server"
   },
   "dependencies": {},
   "peerDependencies": {

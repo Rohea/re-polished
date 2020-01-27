@@ -11,3 +11,4 @@ yarn-error.log
 .bsb.lock
 .merlin
 yarn.lock
+dist
