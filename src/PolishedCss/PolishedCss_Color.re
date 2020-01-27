@@ -1,35 +1,52 @@
 module Utils = {
+  let cssPercentToPercent =
+      (percent: [ | `percent(float)]): Polished.Types.Percent.t =>
+    switch (percent) {
+    | `percent(f) => Polished.Types.Percent.make(f)
+    };
+
+  let cssAngleToDegree = (angle: Css.Types.Angle.t): Polished.Types.Degree.t =>
+    Polished.Types.(
+      switch (angle) {
+      | `grad(f) => Degree.make(f *. 0.9)
+      | `turn(f) => Degree.make(f *. 360.0 /. pi)
+      | `deg(f) => Degree.make(f)
+      | `rad(f) => Degree.make(f *. 180.0 /. pi)
+      }
+    );
+
   let cssToColor =
       (cssColor: Css.Types.Color.t): option(Polished.Types.color) => {
     Polished.Types.(
       switch (cssColor) {
-      | `rgb(r, g, b) =>
-        Some(Polished.Types.RGB(RGB.fromPrimitives(r, g, b)))
+      | `rgb(r, g, b) => Some(RGB(RGB.fromPrimitives(r, g, b)))
       | `rgba(r, g, b, a) => Some(RGBA(RGBA.fromPrimitives(r, g, b, a)))
       | `hex(str) => Some(HEX(HEX.make(str)))
       | `hsl(h, s, l) =>
-        let deg: Degree.t =
-          switch (h) {
-          | `grad(f) => Degree.make(f *. 0.9)
-          | `turn(f) => Degree.make(f *. 360.0 /. pi)
-          | `deg(f) => Degree.make(f)
-          | `rad(f) => Degree.make(f *. 180.0 /. pi)
-          };
         Some(
           HSL(
             HSL.make(
-              ~hue=deg,
-              ~saturation=
-                switch (s) {
-                | `percent(f) => Percent.make(f)
-                },
-              ~lightness=
-                switch (l) {
+              ~hue=cssAngleToDegree(h),
+              ~saturation=cssPercentToPercent(s),
+              ~lightness=cssPercentToPercent(l),
+            ),
+          ),
+        )
+      | `hsla(h, s, l, a) =>
+        Some(
+          HSLA(
+            HSLA.make(
+              ~hue=cssAngleToDegree(h),
+              ~saturation=cssPercentToPercent(s),
+              ~lightness=cssPercentToPercent(l),
+              ~alpha=
+                switch (a) {
+                | `num(f) => Percent.make(f)
                 | `percent(f) => Percent.make(f)
                 },
             ),
           ),
-        );
+        )
       | _ => None
       }
     );
