@@ -17,6 +17,7 @@
     }
   ],
   "bs-dependencies": [
+    "bs-css-emotion",
     "bs-css",
     "reason-react"
   ],
