@@ -104,31 +104,36 @@ let transparentize =
   };
 };
 
-let readable = (
-  cssColor: Css.Types.Color.t,
-  ~light: option(Css.Types.Color.t)=?,
-  ~dark: option(Css.Types.Color.t)=?,
-  ()
- ): Css.Types.Color.t => {
-   switch(Utils.cssToColor(cssColor)) {
-     | Some(color) => {
-       let maybeLight = switch(light) {
-         | Some(l) => Utils.cssToColor(l)
-         | None => None
-       };
-       let maybeDark = switch(dark) {
-         | Some(d) => Utils.cssToColor(d)
-         | None => None
-       };
-      let read = Polished.Color.readable(color, ~light=?maybeLight, ~dark=?maybeDark, ());
-      Utils.colorToCss(read);
-     }
-    | None => {
-      Js.log(
-        "Readable failed. Given css color(s) was invalid",
+let readable =
+    (
+      cssColor: Css.Types.Color.t,
+      ~onLight: option(Css.Types.Color.t)=?,
+      ~onDark: option(Css.Types.Color.t)=?,
+      (),
+    )
+    : Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let maybeLight =
+      switch (onLight) {
+      | Some(l) => Utils.cssToColor(l)
+      | None => None
+      };
+    let maybeDark =
+      switch (onDark) {
+      | Some(d) => Utils.cssToColor(d)
+      | None => None
+      };
+    let read =
+      Polished.Color.readable(
+        color,
+        ~onLight=?maybeLight,
+        ~onDark=?maybeDark,
+        (),
       );
-      cssColor;
-    }
-   }
-}
-
+    Utils.colorToCss(read);
+  | None =>
+    Js.log("Readable failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};

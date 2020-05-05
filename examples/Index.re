@@ -36,8 +36,8 @@ module Readable = {
         color(`rgb((rgbVal, rgbVal, rgbVal))->PolishedCss.Color.readable()),
       ]);
     let getColumn2 = (rgbVal: int) => {
-      let darkColor = Css.hex("999999");
-      let lightColor = Css.hex("555555");
+      let darkColor = Css.hex("555555");
+      let lightColor = Css.hex("999999");
       style([
         width(pct(100.0 /. numCols)),
         float(`left),
@@ -45,8 +45,8 @@ module Readable = {
         color(
           `rgb((rgbVal, rgbVal, rgbVal))
           ->PolishedCss.Color.readable(
-              ~light=lightColor,
-              ~dark=darkColor,
+              ~onLight=darkColor,
+              ~onDark=lightColor,
               (),
             ),
         ),
