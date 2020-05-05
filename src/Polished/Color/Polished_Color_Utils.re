@@ -105,7 +105,7 @@ let convertHSLtoHSLA = (hsl: HSL.t): HSLA.t => {
   );
 };
 
-let convertColorToRGB = (color: color) =>
+let convertColorToRGB = (color: color): RGB.t =>
   switch (color) {
   | RGB(rgb) => rgb
   | RGBA(rgba) => convertRGBAtoRGB(rgba)
@@ -121,7 +121,7 @@ let getLuminance = (color: color): float => {
     rgb->RGB.green |> Int8.toFloat,
     rgb->RGB.blue |> Int8.toFloat,
   );
-  let (rc, gc, bc) = (r /. 255.0, b /. 255.0, b /. 255.0);
+  let (rc, gc, bc) = (r /. 255.0, g /. 255.0, b /. 255.0);
   let convert = c =>
     if (c <= 0.03928) {
       c /. 12.92;
