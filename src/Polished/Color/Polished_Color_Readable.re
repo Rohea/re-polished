@@ -1,8 +1,8 @@
 
 open Polished_Types;
 
-let defaultLightReturnColor = HEX(HEX.make("000000"));
-let defaultDarkReturnColor = HEX(HEX.make("ffffff"));
+let defaultLightReturnColor = RGB(RGB.fromPrimitives(0,0,0));
+let defaultDarkReturnColor = RGB(RGB.fromPrimitives(255,255,255));
 
 let readable = (
   color: color,

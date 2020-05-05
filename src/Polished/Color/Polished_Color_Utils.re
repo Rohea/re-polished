@@ -97,16 +97,17 @@ let getLuminance = (color: color): float => {
     | HSL(hsl) => hsl->convertHSLtoHSLA->convertHSLAtoRGBA->convertRGBAtoRGB
   }
   let (r, g, b) = (rgb->RGB.red |> Int8.toFloat, rgb->RGB.green |> Int8.toFloat, rgb->RGB.blue |> Int8.toFloat);
+  let (rc, gc, bc) = (r /. 255.0, b /. 255.0,  b /. 255.0);
   let convert = (c) =>
     if (c <= 0.03928) {
       c /. 12.92;
     } else {
       (c +. 0.055) /. 1.055 ** 2.4;
     };
-  let r' = convert(r);
-  let g' = convert(g);
-  let b' = convert(b);
-  0.2126 *. r' +. 0.7152 *. g' +. 0.0722 *. b';
+  let r2 = convert(rc);
+  let g2 = convert(gc);
+  let b2 = convert(bc);
+  0.2126 *. r2 +. 0.7152 *. g2 +. 0.0722 *. b2;
 };
 
 let getContrast = (color1: color, color2: color): float => {
