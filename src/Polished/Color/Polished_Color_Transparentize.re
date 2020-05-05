@@ -13,7 +13,7 @@ module Utils = {
   };
 };
 
-let transparentize = (percentage: Percent.t, color: color): color => {
+let transparentize = (color: color, percentage: Percent.t): color => {
   switch (color) {
   | HEX(hex) =>
     Polished_Color_Utils.convertHEXtoRGB(hex)
