@@ -38,17 +38,17 @@ module Readable = {
     let getColumn2 = (rgbVal: int) => {
       let darkColor = Css.hex("555555");
       let lightColor = Css.hex("999999");
+      let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
       style([
         width(pct(100.0 /. numCols)),
         float(`left),
-        backgroundColor(`rgb((rgbVal, rgbVal, rgbVal))),
+        backgroundColor(bgColor),
         color(
-          `rgb((rgbVal, rgbVal, rgbVal))
-          ->PolishedCss.Color.readable(
-              ~onLight=darkColor,
-              ~onDark=lightColor,
-              (),
-            ),
+          bgColor->PolishedCss.Color.readable(
+            ~onLight=darkColor,
+            ~onDark=lightColor,
+            (),
+          ),
         ),
       ]);
     };
