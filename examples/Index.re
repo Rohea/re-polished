@@ -24,10 +24,20 @@ module Transparentize = {
   };
 };
 
+let rgbToString = (r: int, g: int, b: int) => {
+  "("
+  ++ string_of_int(r)
+  ++ ","
+  ++ string_of_int(g)
+  ++ ","
+  ++ string_of_int(b)
+  ++ ")";
+};
+
 module Readable = {
   module Styles = {
     open Css;
-    let numCols = 2.0;
+    let numCols = 4.0;
     let getColumn1 = (rgbVal: int) =>
       style([
         width(pct(100.0 /. numCols)),
@@ -36,13 +46,47 @@ module Readable = {
         color(`rgb((rgbVal, rgbVal, rgbVal))->PolishedCss.Color.readable()),
       ]);
     let getColumn2 = (rgbVal: int) => {
-      let darkColor = Css.hex("555555");
+      let darkColor = Css.hex("181818");
       let lightColor = Css.hex("999999");
       let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
       style([
         width(pct(100.0 /. numCols)),
         float(`left),
         backgroundColor(bgColor),
+        color(
+          bgColor->PolishedCss.Color.readable(
+            ~onLight=darkColor,
+            ~onDark=lightColor,
+            (),
+          ),
+        ),
+      ]);
+    };
+    let getColumn3 = (rgbVal: int) => {
+      let darkColor = Css.hex("770000");
+      let lightColor = Css.hex("ffffff");
+      let bgColor = Css.rgb(225, rgbVal - 30, rgbVal - 30);
+      style([
+        width(pct(100.0 /. numCols)),
+        float(`left),
+        backgroundColor(bgColor),
+        color(
+          bgColor->PolishedCss.Color.readable(
+            ~onLight=darkColor,
+            ~onDark=lightColor,
+            (),
+          ),
+        ),
+      ]);
+    };
+    let getColumn4 = (rgbVal: int) => {
+      let darkColor = hsl(deg(112.0), 100.0, 10.0);
+      let lightColor = Css.hsl(deg(112.0), 1.0, 0.9);
+      let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
+      style([
+        width(pct(100.0 /. numCols)),
+        float(`left),
+        backgroundColor(darkColor),
         color(
           bgColor->PolishedCss.Color.readable(
             ~onLight=darkColor,
@@ -61,10 +105,18 @@ module Readable = {
         let rgbVal = index * 5;
         <div key={string_of_int(index)}>
           <div className={Styles.getColumn1(rgbVal)}>
-            {React.string("Default text on " ++ string_of_int(rgbVal))}
+            {React.string(
+               "Default on " ++ rgbToString(rgbVal, rgbVal, rgbVal),
+             )}
           </div>
           <div className={Styles.getColumn2(rgbVal)}>
-            {React.string("Default text on " ++ string_of_int(rgbVal))}
+            {React.string("Darks on " ++ rgbToString(rgbVal, rgbVal, rgbVal))}
+          </div>
+          <div className={Styles.getColumn3(rgbVal)}>
+            {React.string("Reds on something")}
+          </div>
+          <div className={Styles.getColumn4(rgbVal)}>
+            {React.string("HSL on something")}
           </div>
         </div>;
       });
