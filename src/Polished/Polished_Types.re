@@ -5,6 +5,7 @@ module AbstractPrimitives = {
     type t;
     let make: int => t;
     let asInt: t => int;
+    let toFloat: t => float;
     let fromHEX: (char, char) => t;
   };
   module type Degree = {
@@ -30,6 +31,7 @@ module Int8: AbstractPrimitives.Int8 = {
       value;
     };
   let asInt = t => t;
+  let toFloat = t => float_of_int(t)
   let fromHEX = (c0: char, c1: char): t => {
     make(int_of_string("0x" ++ String.make(1, c0) ++ String.make(1, c1)));
   };

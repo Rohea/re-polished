@@ -88,18 +88,52 @@ module Utils = {
 }; // Utils
 
 let transparentize =
-    (percentage: float, cssColor: Css.Types.Color.t): Css.Types.Color.t => {
+    (cssColor: Css.Types.Color.t, percentage: float): Css.Types.Color.t => {
   let maybeColor = Utils.cssToColor(cssColor);
   let percent = Polished.Types.Percent.make(percentage);
   switch (maybeColor) {
   | Some(c) =>
-    let tr = Polished.Color.Transparentize.transparentize(percent, c);
+    let tr = c->Polished.Color.transparentize(percent);
     let newColor = Utils.colorToCss(tr);
     newColor;
   | _ =>
     Js.log(
       "Transparentize failed. Given percentage or css color was invalid",
     );
+    cssColor;
+  };
+};
+
+let readable =
+    (
+      cssColor: Css.Types.Color.t,
+      ~onLight: option(Css.Types.Color.t)=?,
+      ~onDark: option(Css.Types.Color.t)=?,
+      (),
+    )
+    : Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let maybeLight =
+      switch (onLight) {
+      | Some(l) => Utils.cssToColor(l)
+      | None => None
+      };
+    let maybeDark =
+      switch (onDark) {
+      | Some(d) => Utils.cssToColor(d)
+      | None => None
+      };
+    let read =
+      Polished.Color.readable(
+        color,
+        ~onLight=?maybeLight,
+        ~onDark=?maybeDark,
+        (),
+      );
+    Utils.colorToCss(read);
+  | None =>
+    Js.log("Readable failed. Given css color(s) was invalid");
     cssColor;
   };
 };
