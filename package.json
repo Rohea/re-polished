@@ -11,6 +11,7 @@
     "build": "./node_modules/bs-platform/lib/bsb -make-world",
     "watch": "./node_modules/bs-platform/lib/bsb -make-world -w",
     "clean": "./node_modules/bs-platform/lib/bsb -clean-world",
+    "test": "jest",
     "dev": "webpack-dev-server"
   },
   "dependencies": {},
@@ -18,6 +19,7 @@
     "bs-css": ">12.1.0"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "~0.5.1",
     "reason-react": "~0.7.0",
     "bs-css-emotion": "~1.2.0",
     "bs-platform": "~7.0.1",

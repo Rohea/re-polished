@@ -2,6 +2,15 @@ open Polished_Types;
 
 let positiveFloat = (x, y) => mod_float(mod_float(x, y) +. y, y);
 
+let floatInRange = (value: float, min: float, max: float) =>
+  if (value > max) {
+    max;
+  } else if (value < min) {
+    min;
+  } else {
+    value;
+  };
+
 let convertHEXtoRGB = (tuple: HEX.t): RGB.t =>
   switch (tuple |> HEX.asTuple) {
   | (c0, c1, c2, c3, c4, c5) =>
@@ -10,6 +19,16 @@ let convertHEXtoRGB = (tuple: HEX.t): RGB.t =>
     let blue = Int8.fromHEX(c4, c5);
     RGB.make(~red, ~green, ~blue);
   };
+
+let convertRGBtoHEX = (rgb: RGB.t): HEX.t => {
+  let red = rgb->RGB.red;
+  let green = rgb->RGB.green;
+  let blue = rgb->RGB.blue;
+  let strRed = Printf.sprintf("%x", red->Int8.asInt);
+  let strGreen = Printf.sprintf("%x", green->Int8.asInt);
+  let strBlue = Printf.sprintf("%x", blue->Int8.asInt);
+  HEX.make(strRed ++ strGreen ++ strBlue);
+};
 
 let convertRGBAtoHSLA = (rgba: RGBA.t): HSLA.t => {
   let (red, green, blue, alpha) = (
@@ -96,12 +115,30 @@ let convertRGBAtoRGB = (rgba: RGBA.t): RGB.t => {
   );
 };
 
+let convertRGBtoRGBA = (rgb: RGB.t): RGBA.t => {
+  RGBA.make(
+    ~red=rgb->RGB.red,
+    ~green=rgb->RGB.green,
+    ~blue=rgb->RGB.blue,
+    ~alpha=Percent.make(100.0),
+  );
+};
+
 let convertHSLtoHSLA = (hsl: HSL.t): HSLA.t => {
   HSLA.make(
     ~hue=hsl->HSL.hue,
     ~saturation=hsl->HSL.saturation,
     ~lightness=hsl->HSL.lightness,
     ~alpha=Percent.make(1.0),
+  );
+};
+
+let convertHSLAtoHSL = (hsla: HSLA.t): HSL.t => {
+  HSL.make(
+    ~hue=hsla->HSLA.hue,
+    ~saturation=hsla->HSLA.saturation,
+    ~lightness=hsla->HSLA.lightness,
+    // ~alpha=Percent.make(1.0),
   );
 };
 
