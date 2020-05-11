@@ -137,3 +137,27 @@ let readable =
     cssColor;
   };
 };
+
+let opacify = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let value =
+      Polished.Color.opacify(color, Polished.Types.Percent.make(amount));
+    Utils.colorToCss(value);
+  | None =>
+    Js.log("Opacify failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};
+
+let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let value =
+      Polished.Color.darken(color, Polished.Types.Percent.make(amount));
+    Utils.colorToCss(value);
+  | None =>
+    Js.log("Darken failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};
