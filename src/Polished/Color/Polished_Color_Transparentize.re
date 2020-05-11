@@ -1,7 +1,7 @@
 open Polished_Types;
 open Polished_Color_Utils;
 
-module Utils = {
+module Impl = {
   let transparentizeRGBA = (rgba: RGBA.t, percentage: Percent.t) =>
     RGBA.make(
       ~red=RGBA.red(rgba),
@@ -21,29 +21,29 @@ let transparentize = (color: color, percentage: Percent.t): color => {
     hex
     ->convertHEXtoRGB
     ->convertRGBtoRGBA
-    ->Utils.transparentizeRGBA(percentage)
+    ->Impl.transparentizeRGBA(percentage)
     ->convertRGBAtoRGB
     ->convertRGBtoHEX
     ->HEX
   | RGB(rgb) =>
     rgb
     ->convertRGBtoRGBA
-    ->Utils.transparentizeRGBA(percentage)
+    ->Impl.transparentizeRGBA(percentage)
     ->convertRGBAtoRGB
     ->RGB
-  | RGBA(rgba) => rgba->Utils.transparentizeRGBA(percentage)->RGBA
+  | RGBA(rgba) => rgba->Impl.transparentizeRGBA(percentage)->RGBA
   | HSL(hsl) =>
     hsl
     ->convertHSLtoHSLA
     ->convertHSLAtoRGBA
-    ->Utils.transparentizeRGBA(percentage)
+    ->Impl.transparentizeRGBA(percentage)
     ->convertRGBAtoHSLA
     ->convertHSLAtoHSL
     ->HSL
   | HSLA(hsla) =>
     hsla
     ->convertHSLAtoRGBA
-    ->Utils.transparentizeRGBA(percentage)
+    ->Impl.transparentizeRGBA(percentage)
     ->convertRGBAtoHSLA
     ->HSLA
   };
