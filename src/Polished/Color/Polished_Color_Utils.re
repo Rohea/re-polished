@@ -151,6 +151,15 @@ let convertColorToRGB = (color: color): RGB.t =>
   | HSL(hsl) => hsl->convertHSLtoHSLA->convertHSLAtoRGBA->convertRGBAtoRGB
   };
 
+let convertColorToRGBA = (color: color): RGBA.t =>
+  switch (color) {
+  | RGB(rgb) => rgb->convertRGBtoRGBA
+  | RGBA(rgba) => rgba
+  | HEX(hex) => hex->convertHEXtoRGB->convertRGBtoRGBA
+  | HSLA(hsla) => hsla->convertHSLAtoRGBA
+  | HSL(hsl) => hsl->convertHSLtoHSLA->convertHSLAtoRGBA
+  };
+
 let getLuminance = (color: color): float => {
   let rgb = convertColorToRGB(color);
   let (r, g, b) = (
