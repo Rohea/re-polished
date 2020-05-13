@@ -161,3 +161,16 @@ let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => 
     cssColor;
   };
 };
+
+let desaturate =
+    (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let value =
+      Polished.Color.desaturate(color, Polished.Types.Percent.make(amount));
+    Utils.colorToCss(value);
+  | None =>
+    Js.log("Desaturate failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};

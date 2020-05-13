@@ -7,6 +7,7 @@ A reimplementation of the great [Polished](https://polished.js.org/) library in 
 
 Supported functions
 - darken
+- desaturate
 - opacify
 - readable
 - transparentize
