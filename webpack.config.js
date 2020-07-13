@@ -7,7 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: path.resolve(__dirname, 'lib/es6/examples/Index.bs.js'),
+  entry: path.resolve(__dirname, 'lib/js/examples/Index.bs.js'),
   mode: 'development',
   resolve: {
     modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')]
