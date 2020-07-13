@@ -16,12 +16,13 @@ let readable =
       color: color,
       ~onLight=defaultLightReturnColor,
       ~onDark=defaultDarkReturnColor,
+      ~strict=false,
       (),
     ) => {
   let isLightColor = Polished_Color_Utils.getLuminance(color) > 0.179;
   let preferredReturnColor = isLightColor ? onLight : onDark;
 
-  if (Polished_Color_Utils.getContrast(color, preferredReturnColor) >= 4.5) {
+  if (!strict || Polished_Color_Utils.getContrast(color, preferredReturnColor) >= 4.5) {
     preferredReturnColor;
   } else {
     isLightColor ? defaultLightReturnColor : defaultDarkReturnColor;
