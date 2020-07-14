@@ -80,13 +80,13 @@ module Readable = {
       ]);
     };
     let getColumn4 = (rgbVal: int) => {
-      let darkColor = hsl(deg(112.0), 100.0, 10.0);
+      let darkColor = Css.hsl(deg(112.0), 100.0, 10.0);
       let lightColor = Css.hsl(deg(112.0), 1.0, 0.9);
       let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
       style([
         width(pct(100.0 /. numCols)),
         float(`left),
-        backgroundColor(darkColor),
+        backgroundColor(bgColor),
         color(
           bgColor->PolishedCss.Color.readable(
             ~onLight=darkColor,
