@@ -31,3 +31,17 @@ describe("Polished_Color_Utils.convertRGBtoHEX", () => {
     |> toEqual(HEX.make("0080ff"))
   });
 });
+    
+describe("Polished_Color_Utils.getLuminance", () => {
+  test("luminance of black", () => {
+    expect(RGB(RGB.fromPrimitives(0, 0, 0))->getLuminance) |> toBe(0.0)
+  });
+  test("luminance of white", () => {
+    expect(RGB(RGB.fromPrimitives(255, 255, 255))->getLuminance)
+    |> toBe(1.0)
+  });
+  test("luminance of #808080", () => {
+    expect(RGB(RGB.fromPrimitives(128, 128, 128))->getLuminance)
+    |> toBeSoCloseTo(0.21586, ~digits=4)
+  });
+});

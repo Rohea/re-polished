@@ -172,7 +172,7 @@ let getLuminance = (color: color): float => {
     if (c <= 0.03928) {
       c /. 12.92;
     } else {
-      (c +. 0.055) /. 1.055 ** 2.4;
+      ((c +. 0.055) /. 1.055) ** 2.4;
     };
   let r2 = convert(rc);
   let g2 = convert(gc);
