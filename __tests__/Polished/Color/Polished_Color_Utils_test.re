@@ -3,21 +3,6 @@ open Expect;
 open Polished_Types;
 open Polished_Color_Utils;
 
-describe("convertRGBtoHEX", () => {
-  test("rgba(0,0,0) -> 000000", () => {
-    let rgb = RGB.fromPrimitives(0, 0, 0);
-    expect(rgb->convertRGBtoHEX->HEX.asString) |> toBe("000000");
-  });
-  test("rgba(255,255,255) -> ffffff", () => {
-    let rgb = RGB.fromPrimitives(255, 255, 255);
-    expect(rgb->convertRGBtoHEX->HEX.asString) |> toBe("ffffff");
-  });
-  test("rgba(122,32,65) -> 7a2041", () => {
-    let rgb = RGB.fromPrimitives(122, 32, 65);
-    expect(rgb->convertRGBtoHEX->HEX.asString) |> toBe("7a2041");
-  });
-});
-
 describe("floatInRange", () => {
   test("-0.3 -> 0.0", () => {
     expect((-0.3)->floatInRange(0.0, 1.0)) |> toBe(0.0)
@@ -30,6 +15,23 @@ describe("floatInRange", () => {
   });
 });
 
+describe("Polished_Color_Utils.convertRGBtoHEX", () => {
+  test("convert rgb(0, 0, 0) to #000000", () => {
+    expect(RGB.fromPrimitives(0, 0, 0)->convertRGBtoHEX)
+    |> toEqual(HEX.make("000000"))
+  });
+
+  test("convert rgb(255, 255, 255) to #ffffff", () => {
+    expect(RGB.fromPrimitives(255, 255, 255)->convertRGBtoHEX)
+    |> toEqual(HEX.make("ffffff"))
+  });
+
+  test("convert rgb(0, 128, 255) to #0080ff", () => {
+    expect(RGB.fromPrimitives(0, 128, 255)->convertRGBtoHEX)
+    |> toEqual(HEX.make("0080ff"))
+  });
+});
+    
 describe("Polished_Color_Utils.getLuminance", () => {
   test("luminance of black", () => {
     expect(RGB(RGB.fromPrimitives(0, 0, 0))->getLuminance) |> toBe(0.0)
