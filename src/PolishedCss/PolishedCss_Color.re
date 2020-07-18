@@ -5,6 +5,11 @@ module Utils = {
     | `percent(f) => Polished.Types.Percent.make(f)
     };
 
+  let cssPercentToFloat = (percent: [ | `percent(float)]): float =>
+    switch (percent) {
+    | `percent(f) => f
+    };
+
   let cssAngleToDegree = (angle: Css.Types.Angle.t): Polished.Types.Degree.t =>
     Polished.Types.(
       switch (angle) {
@@ -27,8 +32,10 @@ module Utils = {
           HSL(
             HSL.make(
               ~hue=cssAngleToDegree(h),
-              ~saturation=cssPercentToPercent(s),
-              ~lightness=cssPercentToPercent(l),
+              ~saturation=
+                Polished.Types.Percent.make(cssPercentToFloat(s) /. 100.0),
+              ~lightness=
+                Polished.Types.Percent.make(cssPercentToFloat(l) /. 100.0),
             ),
           ),
         )
@@ -37,8 +44,10 @@ module Utils = {
           HSLA(
             HSLA.make(
               ~hue=cssAngleToDegree(h),
-              ~saturation=cssPercentToPercent(s),
-              ~lightness=cssPercentToPercent(l),
+              ~saturation=
+                Polished.Types.Percent.make(cssPercentToFloat(s) /. 100.0),
+              ~lightness=
+                Polished.Types.Percent.make(cssPercentToFloat(l) /. 100.0),
               ~alpha=
                 switch (a) {
                 | `num(f) => Percent.make(f)
@@ -72,14 +81,14 @@ module Utils = {
       | HSL(hsl) =>
         Css.hsl(
           Css.Types.Angle.deg(HSL.hue(hsl) |> Degree.asFloat),
-          HSL.saturation(hsl) |> Percent.asFloat,
-          HSL.lightness(hsl) |> Percent.asFloat,
+          (HSL.saturation(hsl) |> Percent.asFloat) *. 100.0,
+          (HSL.lightness(hsl) |> Percent.asFloat) *. 100.0,
         )
       | HSLA(hsla) =>
         Css.hsla(
           Css.Types.Angle.deg(HSLA.hue(hsla) |> Degree.asFloat),
-          HSLA.saturation(hsla) |> Percent.asFloat,
-          HSLA.lightness(hsla) |> Percent.asFloat,
+          (HSLA.saturation(hsla) |> Percent.asFloat) *. 100.0,
+          (HSLA.lightness(hsla) |> Percent.asFloat) *. 100.0,
           `percent(HSLA.alpha(hsla) |> Percent.asFloat),
         )
       }
