@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - fixes
   pull_request:
@@ -14,9 +14,9 @@ jobs:
   Jest:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: |
-        npm install
-        npm build
-        npm test
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          yarn install
+          yarn build
+          yarn test
