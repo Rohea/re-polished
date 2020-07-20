@@ -24,9 +24,9 @@ let convertRGBtoHEX = (rgb: RGB.t): HEX.t => {
   let red = rgb->RGB.red;
   let green = rgb->RGB.green;
   let blue = rgb->RGB.blue;
-  let strRed = Printf.sprintf("%x", red->Int8.asInt);
-  let strGreen = Printf.sprintf("%x", green->Int8.asInt);
-  let strBlue = Printf.sprintf("%x", blue->Int8.asInt);
+  let strRed = Printf.sprintf("%02x", red->Int8.asInt);
+  let strGreen = Printf.sprintf("%02x", green->Int8.asInt);
+  let strBlue = Printf.sprintf("%02x", blue->Int8.asInt);
   HEX.make(strRed ++ strGreen ++ strBlue);
 };
 
@@ -172,7 +172,7 @@ let getLuminance = (color: color): float => {
     if (c <= 0.03928) {
       c /. 12.92;
     } else {
-      (c +. 0.055) /. 1.055 ** 2.4;
+      ((c +. 0.055) /. 1.055) ** 2.4;
     };
   let r2 = convert(rc);
   let g2 = convert(gc);
