@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - main
+      - fixes
+  pull_request:
+    branches:
+      - main
+      - fixes
+
+jobs:
+  Jest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: |
+        npm install
+        npm build
+        npm test
