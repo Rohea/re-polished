@@ -2,6 +2,8 @@ open Polished_Types;
 
 let positiveFloat = (x, y) => mod_float(mod_float(x, y) +. y, y);
 
+let round_float = x => floor(x +. 0.5);
+
 let floatInRange = (value: float, min: float, max: float) =>
   if (value > max) {
     max;
@@ -72,20 +74,15 @@ let convertHSLAtoRGBA = (hsla: HSLA.t): RGBA.t => {
     hsla->HSLA.lightness |> Percent.asFloat,
     hsla->HSLA.alpha |> Percent.asFloat,
   );
-  let clip_hue = x =>
-    if (360.0 == x) {
-      x;
-    } else {
-      positiveFloat(x, 360.0);
-    };
-  let norm_hue = clip_hue(h) /. 60.;
+
+  let norm_hue = positiveFloat(h, 360.0) /. 60.;
   let chr = (1. -. abs_float(2. *. l -. 1.)) *. s;
   let m = l -. chr /. 2.;
   let x = chr *. (1. -. abs_float(mod_float(norm_hue, 2.) -. 1.));
   let make = (r, g, b) => {
-    let red = int_of_float(255.0 *. r);
-    let green = int_of_float(255.0 *. g);
-    let blue = int_of_float(255.0 *. b);
+    let red = int_of_float(round_float(255.0 *. (r +. m)));
+    let green = int_of_float(round_float(255.0 *. (g +. m)));
+    let blue = int_of_float(round_float(255.0 *. (b +. m)));
     RGBA.fromPrimitives(red, green, blue, a);
   };
   if (norm_hue < 0.) {
