@@ -14,7 +14,7 @@ module Utils = {
     Polished.Types.(
       switch (angle) {
       | `grad(f) => Degree.make(f *. 0.9)
-      | `turn(f) => Degree.make(f *. 360.0 /. pi)
+      | `turn(f) => Degree.make(f *. 360.0)
       | `deg(f) => Degree.make(f)
       | `rad(f) => Degree.make(f *. 180.0 /. pi)
       }
