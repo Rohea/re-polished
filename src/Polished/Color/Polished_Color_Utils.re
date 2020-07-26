@@ -157,6 +157,11 @@ let convertColorToRGBA = (color: color): RGBA.t =>
   | HSL(hsl) => hsl->convertHSLtoHSLA->convertHSLAtoRGBA
   };
 
+/**
+ * Returns a number (float) representing the luminance of a color.
+ *
+ * Note: ignores aplha parameter of color, and calculates luminance as if its opaque color
+ */
 let getLuminance = (color: color): float => {
   let rgb = convertColorToRGB(color);
   let (r, g, b) = (
@@ -177,6 +182,12 @@ let getLuminance = (color: color): float => {
   0.2126 *. r2 +. 0.7152 *. g2 +. 0.0722 *. b2;
 };
 
+/**
+ * Returns the contrast ratio between two colors based on
+ * [W3's recommended equation for calculating contrast](http://www.w3.org/TR/WCAG20/#contrast-ratiodef).
+ *
+ * Note: ignores aplha parameter of color, and calculates luminance as if its opaque color
+ */
 let getContrast = (color1: color, color2: color): float => {
   let luminance1 = getLuminance(color1);
   let luminance2 = getLuminance(color2);

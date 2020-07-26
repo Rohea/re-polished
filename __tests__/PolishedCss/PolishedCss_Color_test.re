@@ -59,3 +59,136 @@ describe("PolishedCss_Color.Utils.cssAngleToDegree", () => {
     |> toBe(Degree.make(360.0))
   });
 });
+
+describe("PolishedCss_Color.Utils.cssToColor", () => {
+  test("bs-css rgb to polished rgb", () => {
+    expect(Utils.cssToColor(`rgb((0, 128, 255))))
+    |> toEqual(Some(RGB(RGB.fromPrimitives(0, 128, 255))))
+  });
+
+  test("bs-css rgba to polished rgba", () => {
+    expect(Utils.cssToColor(`rgba((0, 128, 255, 0.5))))
+    |> toEqual(Some(RGBA(RGBA.fromPrimitives(0, 128, 255, 0.5))))
+  });
+
+  test("bs-css hex to polished hex", () => {
+    expect(Utils.cssToColor(`hex("0080FF")))
+    |> toEqual(Some(HEX(HEX.make("0080FF"))))
+  });
+
+  test("bs-css hsl to polished hsl", () => {
+    expect(
+      Utils.cssToColor(
+        `hsl((`deg(210.0), `percent(100.0), `percent(50.0))),
+      ),
+    )
+    |> toEqual(Some(HSL(HSL.fromPrimitives(210.0, 1.0, 0.5))))
+  });
+
+  test("bs-css hsla to polished hsla", () => {
+    expect(
+      Utils.cssToColor(
+        `hsla((
+          `deg(210.0),
+          `percent(100.0),
+          `percent(50.0),
+          `percent(0.5),
+        )),
+      ),
+    )
+    |> toEqual(Some(HSLA(HSLA.fromPrimitives(210.0, 1.0, 0.5, 0.5))))
+  });
+
+  test("bs-css transparent to polished rgba", () => {
+    expect(Utils.cssToColor(`transparent))
+    |> toEqual(Some(RGBA(RGBA.fromPrimitives(0, 0, 0, 0.0))))
+  });
+});
+
+describe("PolishedCss_Color.Utils.colorToCss", () => {
+  test("polished rgb to bs-css rgb", () => {
+    expect(Utils.colorToCss(RGB(RGB.fromPrimitives(0, 128, 255))))
+    |> toEqual(`rgb((0, 128, 255)))
+  });
+
+  test("polished rgba to bs-css rgba", () => {
+    expect(Utils.colorToCss(RGBA(RGBA.fromPrimitives(0, 128, 255, 0.5))))
+    |> toEqual(`rgba((0, 128, 255, 0.5)))
+  });
+
+  test("polished hex to bs-css hex", () => {
+    expect(Utils.colorToCss(HEX(HEX.make("0080FF"))))
+    |> toEqual(`hex("0080FF"))
+  });
+
+  test("polished hsl to bs-css hsl", () => {
+    expect(Utils.colorToCss(HSL(HSL.fromPrimitives(210.0, 1.0, 0.5))))
+    |> toEqual(`hsl((`deg(210.0), `percent(100.0), `percent(50.0))))
+  });
+
+  test("polished hsla to bs-css hsla", () => {
+    expect(
+      Utils.colorToCss(HSLA(HSLA.fromPrimitives(210.0, 1.0, 0.5, 0.5))),
+    )
+    |> toEqual(
+         `hsla((
+           `deg(210.0),
+           `percent(100.0),
+           `percent(50.0),
+           `percent(0.5),
+         )),
+       )
+  });
+});
+
+/**
+ * These tests are just very simple because the functions usually use internal polished functions
+ * that are tested in depth.
+ */
+describe("PolishedCss_Color.transparentize", () => {
+  test("transparentize rgb", () => {
+    expect(transparentize(`rgb((0, 128, 255)), 0.5))
+    |> toEqual(`rgba((0, 128, 255, 0.5)))
+  });
+
+  test("transparentize rgba", () => {
+    expect(transparentize(`rgba((0, 128, 255, 0.7)), 0.5))
+    |> toEqual(`rgba((0, 128, 255, 0.2)))
+  });
+});
+
+describe("PolishedCss_Color.readable", () => {
+  let onLight = `rgb((10, 10, 10));
+  let onDark = `rgb((245, 245, 245));
+
+  test("should return onDark color because of dark background color", () => {
+    expect(readable(`rgb((20, 20, 20)), ~onLight, ~onDark, ()))
+    |> toEqual(onDark)
+  });
+
+  test("should return onLight color because of light background color", () => {
+    expect(readable(`rgb((200, 200, 200)), ~onLight, ~onDark, ()))
+    |> toEqual(onLight)
+  });
+});
+
+describe("PolishedCss_Color.opacify", () => {
+  test("opacify rgba", () => {
+    expect(opacify(`rgba((0, 128, 255, 0.2)), 0.5))
+    |> toEqual(`rgba((0, 128, 255, 0.7)))
+  })
+});
+
+describe("PolishedCss_Color.darken", () => {
+  test("darken rgb(0, 128, 255) by 0.3", () => {
+    expect(darken(`rgb((0, 128, 255)), 0.3))
+    |> toEqual(`rgb((0, 51, 102)))
+  })
+});
+
+describe("PolishedCss_Color.desaturate", () => {
+  test("desaturate rgb(0, 128, 255) by 0.3", () => {
+    expect(desaturate(`rgb((0, 128, 255)), 0.3))
+    |> toEqual(`rgb((38, 128, 217)))
+  })
+});
