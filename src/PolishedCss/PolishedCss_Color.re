@@ -56,7 +56,8 @@ module Utils = {
             ),
           ),
         )
-      | _ => None
+      | `transparent => Some(RGBA(RGBA.fromPrimitives(0, 0, 0, 0.0)))
+      | `currentColor => None
       }
     );
   };
