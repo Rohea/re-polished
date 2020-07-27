@@ -16,8 +16,10 @@ module Impl = {
 };
 
 /**
- * Returns a string value for the darkened color.
+ * Decrease the lightness of a color. Its range for the amount is between 0 to 1.
+ *
  */
+
 let darken = (color: color, amount: Percent.t) => {
   switch (color) {
   | HEX(hex) =>
