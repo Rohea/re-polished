@@ -1,1 +1,1 @@
-module Color = PolishedCss_Color;
+include PolishedCss_Color;
