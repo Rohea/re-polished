@@ -64,6 +64,11 @@ describe("Polished_Color_Utils.convertHEXtoRGB", () => {
     expect(HEX.make("0080ff")->convertHEXtoRGB)
     |> toEqual(RGB.fromPrimitives(0, 128, 255))
   });
+
+  test("convert #5588cc to rgb(85, 136, 204)", () => {
+    expect(HEX.make("5588cc")->convertHEXtoRGB)
+    |> toEqual(RGB.fromPrimitives(85, 136, 204))
+  });
 });
 
 describe("Polished_Color_Utils.convertRGBtoHEX", () => {

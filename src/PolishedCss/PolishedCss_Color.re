@@ -172,6 +172,18 @@ let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => 
   };
 };
 
+let lighten = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let value =
+      Polished.Color.lighten(color, Polished.Types.Percent.make(amount));
+    Utils.colorToCss(value);
+  | None =>
+    Js.log("Lighten failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};
+
 let desaturate =
     (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
   switch (Utils.cssToColor(cssColor)) {
