@@ -15,7 +15,7 @@ Then add `@rohea/re-polished` to `bs-dependencies` in your `bsconfig.json`.
 
 Add some point there will probably be a proper release. Watch this space.
 
-## Example Usage with bs-css
+## Example usage with bs-css
 
 ```
 let myClass = Css.style([
