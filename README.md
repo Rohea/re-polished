@@ -13,7 +13,7 @@ Add following line to your package.json, delete lock file and re-install depende
 ```
 Then add `@rohea/re-polished` to `bs-dependencies` in your `bsconfig.json`.
 
-Add some point there will probably be a proper release. Watch this space.
+some point there will probably be a proper release. Watch this space.
 
 ## Example usage with bs-css
 
