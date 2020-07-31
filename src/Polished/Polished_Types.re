@@ -31,7 +31,7 @@ module Int8: AbstractPrimitives.Int8 = {
       value;
     };
   let asInt = t => t;
-  let toFloat = t => float_of_int(t)
+  let toFloat = t => float_of_int(t);
   let fromHEX = (c0: char, c1: char): t => {
     make(int_of_string("0x" ++ String.make(1, c0) ++ String.make(1, c1)));
   };
@@ -164,10 +164,36 @@ module HEX: AbstractColors.HEX = {
   let make = (value: string): t => {
     let str = [|'0', '0', '0', '0', '0', '0'|];
     String.mapi(
-      (index, character) =>
+      (index, char) =>
         if (index < 6) {
-          str[index] = character;
-          character;
+          let validChar =
+            switch (char) {
+            | '0' => '0'
+            | '1' => '1'
+            | '2' => '2'
+            | '3' => '3'
+            | '4' => '4'
+            | '5' => '5'
+            | '6' => '6'
+            | '7' => '7'
+            | '8' => '8'
+            | '9' => '9'
+            | 'a'
+            | 'A' => 'a'
+            | 'b'
+            | 'B' => 'b'
+            | 'c'
+            | 'C' => 'c'
+            | 'd'
+            | 'D' => 'd'
+            | 'e'
+            | 'E' => 'e'
+            | 'f'
+            | 'F' => 'f'
+            | _ => ' '
+            };
+          str[index] = validChar;
+          validChar;
         } else {
           ' ';
         },

@@ -117,8 +117,13 @@ describe("PolishedCss_Color.Utils.colorToCss", () => {
   });
 
   test("polished hex to bs-css hex", () => {
-    expect(Utils.colorToCss(HEX(HEX.make("0080FF"))))
-    |> toEqual(`hex("0080FF"))
+    expect(Utils.colorToCss(HEX(HEX.make("0080ff"))))
+    |> toEqual(`hex("0080ff"))
+  });
+
+  test("polished hex to bs-css hex with decapitalization", () => {
+    expect(Utils.colorToCss(HEX(HEX.make("AABBFF"))))
+    |> toEqual(`hex("aabbff"))
   });
 
   test("polished hsl to bs-css hsl", () => {

@@ -138,18 +138,22 @@ describe("Polished_Types.RGBA", () => {
 });
 
 describe("Polished_Types.HEX", () => {
-  let hex = HEX.make("0008B5");
+  let hex = HEX.make("0008b5");
 
   test("make", () => {
-    expect(hex->HEX.asString) |> toBe("0008B5")
+    expect(hex->HEX.asString) |> toBe("0008b5")
   });
 
   test("asTuple", () => {
-    expect(hex->HEX.asTuple) |> toEqual(('0', '0', '0', '8', 'B', '5'))
+    expect(hex->HEX.asTuple) |> toEqual(('0', '0', '0', '8', 'b', '5'))
   });
 
   test("asString", () => {
-    expect(hex->HEX.asString) |> toBe("0008B5")
+    expect(hex->HEX.asString) |> toBe("0008b5")
+  });
+
+  test("make", () => {
+    expect(HEX.make("AABBFF")->HEX.asString) |> toBe("aabbff")
   });
 });
 
