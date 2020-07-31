@@ -1,9 +1,9 @@
 # Re-Polished
 
-A reimplementation of the great [Polished](https://polished.js.org/) library in idiomatic [ReasonML](https://reasonml.github.io/en/) with following goals:
-- Provide well designed data types for color manipulation
-- Implement most of the color manipulation functions etc. with familiar names from Polished in platform agnostic ReasonML.
-- Offer a binding layer for [Bs-Css](https://github.com/reasonml-labs/bs-css) for easier use with it on web platform (Bucklescript)
+A reimplementation of the great [Polished](https://polished.js.org/) library in [ReasonML](https://reasonml.github.io/en/) with following goals:
+- Provide data types for color manipulation
+- Implement many of the color manipulation functions from Polished in platform agnostic ReasonML.
+- Offer a binding layer for [Bs-Css](https://github.com/reasonml-labs/bs-css) and others (?) for easier use on web platform (Bucklescript)
 
 ## Installation
 
