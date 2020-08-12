@@ -5,7 +5,7 @@ module Transparentize = {
     let getRedBoxTransparentize = () =>
       style([
         backgroundColor(
-          rgba(255, 0, 0, 1.0)->PolishedCss.Color.transparentize(0.5),
+          rgba(255, 0, 0, 1.0)->PolishedCss.transparentize(0.5),
         ),
       ]);
   };
@@ -43,7 +43,7 @@ module Readable = {
         width(pct(100.0 /. numCols)),
         float(`left),
         backgroundColor(`rgb((rgbVal, rgbVal, rgbVal))),
-        color(`rgb((rgbVal, rgbVal, rgbVal))->PolishedCss.Color.readable()),
+        color(`rgb((rgbVal, rgbVal, rgbVal))->PolishedCss.readable()),
       ]);
     let getColumn2 = (rgbVal: int) => {
       let darkColor = Css.hex("181818");
@@ -54,7 +54,7 @@ module Readable = {
         float(`left),
         backgroundColor(bgColor),
         color(
-          bgColor->PolishedCss.Color.readable(
+          bgColor->PolishedCss.readable(
             ~onLight=darkColor,
             ~onDark=lightColor,
             (),
@@ -71,7 +71,7 @@ module Readable = {
         float(`left),
         backgroundColor(bgColor),
         color(
-          bgColor->PolishedCss.Color.readable(
+          bgColor->PolishedCss.readable(
             ~onLight=darkColor,
             ~onDark=lightColor,
             (),
@@ -88,7 +88,7 @@ module Readable = {
         float(`left),
         backgroundColor(bgColor),
         color(
-          bgColor->PolishedCss.Color.readable(
+          bgColor->PolishedCss.readable(
             ~onLight=darkColor,
             ~onDark=lightColor,
             (),

@@ -45,7 +45,6 @@ module Impl = {
 /**
  * Decreases the opacity of a color. Its range for the amount is between 0 to 1.
  * If input is HSL or HSLA color, returns HSLA, otherwise returns RGBA color.
- *
  */
 let transparentize = (color: color, percentage: Percent.t): color => {
   switch (color) {

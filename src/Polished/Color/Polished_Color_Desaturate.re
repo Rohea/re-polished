@@ -16,9 +16,7 @@ module Impl = {
 };
 
 /**
- * Decreases the intensity of a color. Its range is between 0 to 1. The first
- * argument of the desaturate function is the amount by how much the color
- * intensity should be decreased.
+ * Decreases the intensity (saturation) of a color. Its range is between 0 to 1.
  */
 let desaturate = (color: color, amount: Percent.t): color => {
   switch (color) {

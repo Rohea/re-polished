@@ -40,9 +40,7 @@ module Impl = {
 /**
  * Increase the opacity of a color. Its range for the amount is between 0 to 1.
  * If input is HSL or HSLA color, returns HSLA, otherwise returns RGBA color.
- *
  */
-
 let opacify = (color: color, amount: Percent.t) => {
   switch (color) {
   | HEX(hex) =>

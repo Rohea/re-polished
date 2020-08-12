@@ -56,7 +56,8 @@ module Utils = {
             ),
           ),
         )
-      | _ => None
+      | `transparent => Some(RGBA(RGBA.fromPrimitives(0, 0, 0, 0.0)))
+      | `currentColor => None
       }
     );
   };
@@ -167,6 +168,18 @@ let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => 
     Utils.colorToCss(value);
   | None =>
     Js.log("Darken failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};
+
+let lighten = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) =>
+    let value =
+      Polished.Color.lighten(color, Polished.Types.Percent.make(amount));
+    Utils.colorToCss(value);
+  | None =>
+    Js.log("Lighten failed. Given css color(s) was invalid");
     cssColor;
   };
 };
