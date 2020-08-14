@@ -197,3 +197,9 @@ describe("PolishedCss_Color.desaturate", () => {
     |> toEqual(`rgb((38, 128, 217)))
   })
 });
+
+describe("PolishedCss_Color.invert", () => {
+  test("invert rgb(101, 100, 205)", () => {
+    expect(invert(`rgb((101, 100, 205)))) |> toEqual(`rgb((154, 155, 50)))
+  })
+});

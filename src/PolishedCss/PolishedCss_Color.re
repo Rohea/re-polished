@@ -151,9 +151,8 @@ let readable =
 let opacify = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
   switch (Utils.cssToColor(cssColor)) {
   | Some(color) =>
-    let value =
-      Polished.Color.opacify(color, Polished.Types.Percent.make(amount));
-    Utils.colorToCss(value);
+    Polished.Color.opacify(color, Polished.Types.Percent.make(amount))
+    ->Utils.colorToCss
   | None =>
     Js.log("Opacify failed. Given css color(s) was invalid");
     cssColor;
@@ -163,9 +162,8 @@ let opacify = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t =>
 let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
   switch (Utils.cssToColor(cssColor)) {
   | Some(color) =>
-    let value =
-      Polished.Color.darken(color, Polished.Types.Percent.make(amount));
-    Utils.colorToCss(value);
+    Polished.Color.darken(color, Polished.Types.Percent.make(amount))
+    ->Utils.colorToCss
   | None =>
     Js.log("Darken failed. Given css color(s) was invalid");
     cssColor;
@@ -175,9 +173,8 @@ let darken = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => 
 let lighten = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
   switch (Utils.cssToColor(cssColor)) {
   | Some(color) =>
-    let value =
-      Polished.Color.lighten(color, Polished.Types.Percent.make(amount));
-    Utils.colorToCss(value);
+    Polished.Color.lighten(color, Polished.Types.Percent.make(amount))
+    ->Utils.colorToCss
   | None =>
     Js.log("Lighten failed. Given css color(s) was invalid");
     cssColor;
@@ -188,11 +185,19 @@ let desaturate =
     (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
   switch (Utils.cssToColor(cssColor)) {
   | Some(color) =>
-    let value =
-      Polished.Color.desaturate(color, Polished.Types.Percent.make(amount));
-    Utils.colorToCss(value);
+    Polished.Color.desaturate(color, Polished.Types.Percent.make(amount))
+    ->Utils.colorToCss
   | None =>
     Js.log("Desaturate failed. Given css color(s) was invalid");
+    cssColor;
+  };
+};
+
+let invert = (cssColor: Css.Types.Color.t): Css.Types.Color.t => {
+  switch (Utils.cssToColor(cssColor)) {
+  | Some(color) => Polished.Color.invert(color)->Utils.colorToCss
+  | None =>
+    Js.log("Invert failed. Given css color(s) was invalid");
     cssColor;
   };
 };

@@ -27,6 +27,7 @@ let myClass = Css.style([
 
 - darken
 - desaturate
+- invert
 - lighten
 - opacify
 - readable
