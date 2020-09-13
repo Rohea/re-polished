@@ -32,6 +32,9 @@ let myClass = Css.style([
 - opacify
 - readable
 - transparentize
+- mix
+- shade
+- tint
  
 New functions are added as soon as we need them or someone makes a nice pull request :)
 
