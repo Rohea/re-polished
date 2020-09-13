@@ -93,5 +93,4 @@ let mix = (color: color, baseColor: color, weight: Percent.t): color => {
   | (HSLA(_), RGB(_) | HEX(_) | HSL(_)) =>
     HSLA(convertRGBAtoHSLA(RGBA.fromPrimitives(red, green, blue, alpha)))
   };
-  // };
 };
