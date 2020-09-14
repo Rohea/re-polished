@@ -203,3 +203,28 @@ describe("PolishedCss_Color.invert", () => {
     expect(invert(`rgb((101, 100, 205)))) |> toEqual(`rgb((154, 155, 50)))
   })
 });
+
+describe("PolishedCss_Color.mix", () => {
+  test("mix two rgb and rgba colors", () => {
+    expect(mix(`rgb((0, 0, 0)), `rgba((255, 255, 255, 0.0)), 0.7))
+    |> toEqual(`rgba((0, 0, 0, 0.7)))
+  });
+
+  test("mix two rgba colors", () => {
+    expect(mix(`rgba((0, 255, 128, 0.5)), `rgba((128, 0, 255, 0.5)), 0.5))
+    |> toEqual(`rgba((64, 127, 191, 0.5)))
+  });
+});
+
+describe("PolishedCss_Color.shade", () => {
+  test("shade rgb(0, 128, 255) by 0.3", () => {
+    expect(shade(`rgb((0, 128, 255)), 0.3)) |> toEqual(`rgb((0, 89, 178)))
+  })
+});
+
+describe("PolishedCss_Color.tint", () => {
+  test("tint rgb(0, 128, 255) by 0.3", () => {
+    expect(tint(`rgb((0, 128, 255)), 0.3))
+    |> toEqual(`rgb((76, 166, 255)))
+  })
+});
