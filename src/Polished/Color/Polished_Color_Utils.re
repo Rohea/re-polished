@@ -135,8 +135,21 @@ let convertHSLAtoHSL = (hsla: HSLA.t): HSL.t => {
     ~hue=hsla->HSLA.hue,
     ~saturation=hsla->HSLA.saturation,
     ~lightness=hsla->HSLA.lightness,
-    // ~alpha=Percent.make(1.0),
   );
+};
+
+let convertRGBtoHSL = (rgb: RGB.t): HSL.t => {
+  let rgba = convertRGBtoRGBA(rgb);
+  let hsla = convertRGBAtoHSLA(rgba);
+
+  convertHSLAtoHSL(hsla);
+};
+
+let convertHSLtoRGB = (hsl: HSL.t): RGB.t => {
+  let hsla = convertHSLtoHSLA(hsl);
+  let rgba = convertHSLAtoRGBA(hsla);
+
+  convertRGBAtoRGB(rgba);
 };
 
 let convertColorToRGB = (color: color): RGB.t =>

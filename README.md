@@ -29,8 +29,11 @@ let myClass = Css.style([
 - desaturate
 - invert
 - lighten
+- mix
 - opacify
 - readable
+- shade
+- tint
 - transparentize
  
 New functions are added as soon as we need them or someone makes a nice pull request :)

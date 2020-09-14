@@ -246,6 +246,50 @@ describe("Polished_Color_Utils.convertHSLAtoHSL", () => {
   })
 });
 
+describe("Polished_Color_Utils.convertRGBtoHSL", () => {
+  test("convert rgb(0, 0, 0) to hsl(0.0, 0.0, 0.0)", () => {
+    expect(RGB.fromPrimitives(0, 0, 0)->convertRGBtoHSL)
+    |> toEqual(HSL.fromPrimitives(0.0, 0.0, 0.0))
+  });
+
+  test("convert rgb(255, 255, 255) to hsl(0.0, 0.0, 1.0)", () => {
+    expect(RGB.fromPrimitives(255, 255, 255)->convertRGBtoHSL)
+    |> toEqual(HSL.fromPrimitives(0.0, 0.0, 1.0))
+  });
+
+  test("convert rgb(0, 128, 255) to hsl(209.88235294117646, 1.0, 0.5)", () => {
+    expect(RGB.fromPrimitives(0, 128, 255)->convertRGBtoHSL)
+    |> toEqual(HSL.fromPrimitives(209.88235294117646, 1.0, 0.5))
+  });
+});
+
+describe("Polished_Color_Utils.convertHSLtoRGB", () => {
+  test("convert hsl(0.0, 0.0, 0.0) to rgb(0, 0, 0)", () => {
+    expect(HSL.fromPrimitives(0.0, 0.0, 0.0)->convertHSLtoRGB)
+    |> toEqual(RGB.fromPrimitives(0, 0, 0))
+  });
+
+  test("convert hsl(0.0, 0.0, 1.0) to rgb(255, 255, 255)", () => {
+    expect(HSL.fromPrimitives(0.0, 0.0, 1.0)->convertHSLtoRGB)
+    |> toEqual(RGB.fromPrimitives(255, 255, 255))
+  });
+
+  test("convert hsl(0.0, 0.5, 0.5) to rgb(191, 64, 64)", () => {
+    expect(HSL.fromPrimitives(0.0, 0.5, 0.5)->convertHSLtoRGB)
+    |> toEqual(RGB.fromPrimitives(191, 64, 64))
+  });
+
+  test("convert hsl(360.0, 0.5, 0.5) to rgb(191, 64, 64)", () => {
+    expect(HSL.fromPrimitives(360.0, 0.5, 0.5)->convertHSLtoRGB)
+    |> toEqual(RGB.fromPrimitives(191, 64, 64))
+  });
+
+  test("convert hsl(209.8, 1.0, 0.5) to rgb(0, 128, 255)", () => {
+    expect(HSL.fromPrimitives(209.8, 1.0, 0.5)->convertHSLtoRGB)
+    |> toEqual(RGB.fromPrimitives(0, 128, 255))
+  });
+});
+
 describe("Polished_Color_Utils.convertColorToRGB", () => {
   let expectedRGB = RGB.fromPrimitives(0, 128, 255);
 
