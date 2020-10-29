@@ -8,6 +8,7 @@ let readable = Polished_Color_Readable.readable;
 let shade = Polished_Color_Shade.shade;
 let tint = Polished_Color_Tint.tint;
 let transparentize = Polished_Color_Transparentize.transparentize;
+let setAlpha = Polished_Color_SetAlpha.setAlpha;
 
 module Utils = {
   let convertColorToRGB = Polished_Color_Utils.convertColorToRGB;
