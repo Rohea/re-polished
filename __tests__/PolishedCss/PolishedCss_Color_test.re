@@ -228,3 +228,15 @@ describe("PolishedCss_Color.tint", () => {
     |> toEqual(`rgb((76, 166, 255)))
   })
 });
+
+describe("PolishedCss_Color.setAlpha", () => {
+  test("setAlpha of rgb", () => {
+    expect(setAlpha(`rgb((0, 128, 255)), 0.5))
+    |> toEqual(`rgba((0, 128, 255, 0.5)))
+  });
+
+  test("setAlpha of rgba", () => {
+    expect(setAlpha(`rgba((0, 128, 255, 0.7)), 0.5))
+    |> toEqual(`rgba((0, 128, 255, 0.5)))
+  });
+});
