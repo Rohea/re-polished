@@ -249,3 +249,18 @@ let tint = (cssColor: Css.Types.Color.t, amount: float): Css.Types.Color.t => {
     cssColor;
   };
 };
+
+let setAlpha =
+    (cssColor: Css.Types.Color.t, percentage: float): Css.Types.Color.t => {
+  let maybeColor = Utils.cssToColor(cssColor);
+  let percent = Polished.Types.Percent.make(percentage);
+  switch (maybeColor) {
+  | Some(c) =>
+    let tr = c->Polished.Color.setAlpha(percent);
+    let newColor = Utils.colorToCss(tr);
+    newColor;
+  | _ =>
+    Js.log("setAlpha failed. Given percentage or css color was invalid");
+    cssColor;
+  };
+};

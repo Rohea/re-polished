@@ -35,6 +35,7 @@ let myClass = Css.style([
 - shade
 - tint
 - transparentize
+- setAlpha
  
 New functions are added as soon as we need them or someone makes a nice pull request :)
 
