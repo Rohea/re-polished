@@ -10,7 +10,7 @@ module Utils = {
     | `percent(f) => f
     };
 
-  let cssAngleToDegree = (angle: Css.Types.Angle.t): Polished.Types.Degree.t =>
+  let cssAngleToDegree = (angle): Polished.Types.Degree.t =>
     Polished.Types.(
       switch (angle) {
       | `grad(f) => Degree.make(f *. 0.9)
@@ -20,8 +20,7 @@ module Utils = {
       }
     );
 
-  let cssToColor =
-      (cssColor: Css.Types.Color.t): option(Polished.Types.color) => {
+  let cssToColor = (cssColor): option(Polished.Types.color) => {
     Polished.Types.(
       switch (cssColor) {
       | `rgb(r, g, b) => Some(RGB(RGB.fromPrimitives(r, g, b)))
