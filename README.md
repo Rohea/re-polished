@@ -5,22 +5,28 @@ A reimplementation of the great [Polished](https://polished.js.org/) library in 
 - Implement many of the color manipulation functions from Polished in platform agnostic ReasonML.
 - Offer a binding layer for [Bs-Css](https://github.com/reasonml-labs/bs-css) and others (?) for easier use on web platform (Bucklescript)
 
-## Installation
+## Installation with bs-css
 
 ```
-yarn add @rohea/re-polished-bs-css,
+yarn add @rohea/re-polished-bs-css
 ```
 Then add `@rohea/re-polished` and `@rohea/re-polished-bs-css` to `bs-dependencies` in your `bsconfig.json`.
 
-At some point there will probably be a proper release. Watch this space.
-
-## Example usage with bs-css
+## Usage with bs-css
 
 ```
 let myClass = Css.style([
     Css.backgroundColor(`hex("ff0000")->PolishedCss.darken(0.5))
 ]);
 ```
+
+## Installation without bindings
+
+```
+yarn add @rohea/re-polished
+```
+Then add `@rohea/re-polished` to `bs-dependencies` in your `bsconfig.json`.
+
 
 ## Supported functions
 
