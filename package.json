@@ -1,5 +1,5 @@
 {
-  "name": "@rohea/re-polished",
+  "name": "root",
   "version": "0.0.1-dev.0",
   "description": "Reason native port of Polished library",
   "license": "MIT",
@@ -8,22 +8,24 @@
     "url": "https://github.com/Rohea/re-polished.git"
   },
   "scripts": {
-    "build": "./node_modules/bs-platform/lib/bsb -make-world",
-    "watch": "./node_modules/bs-platform/lib/bsb -make-world -w",
-    "clean": "./node_modules/bs-platform/lib/bsb -clean-world",
+    "build": "bsb -make-world",
+    "clean": "bsb -clean-world",
     "test": "jest",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "watch": "watchexec -w packages -w src -i lib -e re,rei yarn build"
   },
+  "private": true,
+  "workspaces": [
+    "@rohea/re-polished",
+    "@rohea/re-polished-bs-css"
+  ],
   "dependencies": {},
-  "peerDependencies": {
-    "bs-css": ">12.1.0"
-  },
   "devDependencies": {
-    "@glennsl/bs-jest": "~0.5.1",
-    "reason-react": "~0.7.0",
-    "bs-css-emotion": "~1.2.0",
-    "bs-platform": "~7.0.1",
-    "gentype": "~3.35.0",
+    "@glennsl/bs-jest": "~0.6.0",
+    "reason-react": "~0.9.1",
+    "bs-css-emotion": "~2.1.0",
+    "bs-platform": "~8.4.2",
+    "gentype": "~3.41.0",
     "clean-webpack-plugin": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
     "@babel/core": "7.11.6",

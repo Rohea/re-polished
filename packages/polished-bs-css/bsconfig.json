@@ -1,5 +1,5 @@
 {
-  "name": "monorepo-root",
+  "name": "@rohea/re-polished-bs-css",
   "reason": {
     "react-jsx": 3
   },
@@ -8,18 +8,18 @@
   ],
   "sources": [
     {
-      "dir": "examples",
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev",
       "subdirs": true
     }
   ],
-  "pinned-dependencies": [
-    "@rohea/re-polished",
-    "@rohea/re-polished-bs-css"
-  ],
   "bs-dependencies": [
-    "@rohea/re-polished",
-    "@rohea/re-polished-bs-css",
-    "reason-react"
+    "bs-css-emotion",
+    "bs-css"
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest"

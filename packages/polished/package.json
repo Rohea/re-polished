@@ -1,0 +1,22 @@
+{
+  "name": "@rohea/re-polished",
+  "version": "0.0.1-dev.0",
+  "description": "ReScript port of Polished library for color manipulation",
+  "license": "MIT",
+  "keywords": [
+    "ReScript",
+    "bucklescript",
+    "color"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rohea/re-polished.git/packages/polished"
+  },
+  "scripts": {
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "test": "jest"
+  },
+  "dependencies": {}
+}

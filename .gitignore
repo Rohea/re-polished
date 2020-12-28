@@ -11,4 +11,5 @@ yarn-error.log
 .bsb.lock
 .merlin
 yarn.lock
+package-lock.json
 dist
