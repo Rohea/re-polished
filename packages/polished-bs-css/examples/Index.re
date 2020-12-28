@@ -1,11 +1,12 @@
 module Transparentize = {
   module Styles = {
     open Css;
-    let getRedBox = () => style([backgroundColor(rgba(255, 0, 0, 1.0))]);
+    let getRedBox = () =>
+      style([backgroundColor(rgba(255, 0, 0, `num(1.0)))]);
     let getRedBoxTransparentize = () =>
       style([
         backgroundColor(
-          rgba(255, 0, 0, 1.0)->PolishedCss.transparentize(0.5),
+          rgba(255, 0, 0, `percent(100.0))->PolishedCss.transparentize(0.5),
         ),
       ]);
   };
@@ -41,7 +42,7 @@ module Readable = {
     let getColumn1 = (rgbVal: int) =>
       style([
         width(pct(100.0 /. numCols)),
-        float(`left),
+        Css.float(`left),
         backgroundColor(`rgb((rgbVal, rgbVal, rgbVal))),
         color(`rgb((rgbVal, rgbVal, rgbVal))->PolishedCss.readable()),
       ]);
@@ -51,7 +52,7 @@ module Readable = {
       let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
       style([
         width(pct(100.0 /. numCols)),
-        float(`left),
+        Css.float(`left),
         backgroundColor(bgColor),
         color(
           bgColor->PolishedCss.readable(
@@ -68,7 +69,7 @@ module Readable = {
       let bgColor = Css.rgb(225, rgbVal - 30, rgbVal - 30);
       style([
         width(pct(100.0 /. numCols)),
-        float(`left),
+        Css.float(`left),
         backgroundColor(bgColor),
         color(
           bgColor->PolishedCss.readable(
@@ -80,12 +81,12 @@ module Readable = {
       ]);
     };
     let getColumn4 = (rgbVal: int) => {
-      let darkColor = Css.hsl(deg(112.0), 100.0, 10.0);
-      let lightColor = Css.hsl(deg(112.0), 1.0, 0.9);
+      let darkColor = Css.hsl(deg(112.0), `percent(100.0), `percent(10.0));
+      let lightColor = Css.hsl(deg(112.0), `percent(1.0), `percent(90.0));
       let bgColor = Css.rgb(rgbVal, rgbVal, rgbVal);
       style([
         width(pct(100.0 /. numCols)),
-        float(`left),
+        Css.float(`left),
         backgroundColor(bgColor),
         color(
           bgColor->PolishedCss.readable(
@@ -116,7 +117,9 @@ module Readable = {
             {React.string("Reds on something")}
           </div>
           <div className={Styles.getColumn4(rgbVal)}>
-            {React.string("HSL on something")}
+            {React.string(
+               "HSL green on " ++ rgbToString(rgbVal, rgbVal, rgbVal),
+             )}
           </div>
         </div>;
       });

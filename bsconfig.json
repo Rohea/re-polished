@@ -6,20 +6,17 @@
   "bsc-flags": [
     "-bs-super-errors"
   ],
-  "sources": [
-    {
-      "dir": "examples",
-      "subdirs": true
-    }
-  ],
+  "sources": [],
   "pinned-dependencies": [
     "@rohea/re-polished",
     "@rohea/re-polished-bs-css"
   ],
   "bs-dependencies": [
+    "reason-react",
+    "bs-css-emotion",
+    "bs-css",
     "@rohea/re-polished",
-    "@rohea/re-polished-bs-css",
-    "reason-react"
+    "@rohea/re-polished-bs-css"
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest"

@@ -67,7 +67,7 @@ describe("PolishedCss_Color.Utils.cssToColor", () => {
   });
 
   test("bs-css rgba to polished rgba", () => {
-    expect(Utils.cssToColor(`rgba((0, 128, 255, 0.5))))
+    expect(Utils.cssToColor(`rgba((0, 128, 255, `num(0.5)))))
     |> toEqual(Some(RGBA(RGBA.fromPrimitives(0, 128, 255, 0.5))))
   });
 
@@ -88,12 +88,7 @@ describe("PolishedCss_Color.Utils.cssToColor", () => {
   test("bs-css hsla to polished hsla", () => {
     expect(
       Utils.cssToColor(
-        `hsla((
-          `deg(210.0),
-          `percent(100.0),
-          `percent(50.0),
-          `percent(0.5),
-        )),
+        `hsla((`deg(210.0), `percent(100.0), `percent(50.0), `num(0.5))),
       ),
     )
     |> toEqual(Some(HSLA(HSLA.fromPrimitives(210.0, 1.0, 0.5, 0.5))))
@@ -113,7 +108,7 @@ describe("PolishedCss_Color.Utils.colorToCss", () => {
 
   test("polished rgba to bs-css rgba", () => {
     expect(Utils.colorToCss(RGBA(RGBA.fromPrimitives(0, 128, 255, 0.5))))
-    |> toEqual(`rgba((0, 128, 255, 0.5)))
+    |> toEqual(`rgba((0, 128, 255, `percent(50.0))))
   });
 
   test("polished hex to bs-css hex", () => {
@@ -140,7 +135,7 @@ describe("PolishedCss_Color.Utils.colorToCss", () => {
            `deg(210.0),
            `percent(100.0),
            `percent(50.0),
-           `percent(0.5),
+           `percent(50.0),
          )),
        )
   });
@@ -153,12 +148,12 @@ describe("PolishedCss_Color.Utils.colorToCss", () => {
 describe("PolishedCss_Color.transparentize", () => {
   test("transparentize rgb", () => {
     expect(transparentize(`rgb((0, 128, 255)), 0.5))
-    |> toEqual(`rgba((0, 128, 255, 0.5)))
+    |> toEqual(`rgba((0, 128, 255, `percent(50.0))))
   });
 
   test("transparentize rgba", () => {
-    expect(transparentize(`rgba((0, 128, 255, 0.7)), 0.5))
-    |> toEqual(`rgba((0, 128, 255, 0.2)))
+    expect(transparentize(`rgba((0, 128, 255, `num(0.7))), 0.5))
+    |> toEqual(`rgba((0, 128, 255, `percent(20.0))))
   });
 });
 
@@ -179,8 +174,8 @@ describe("PolishedCss_Color.readable", () => {
 
 describe("PolishedCss_Color.opacify", () => {
   test("opacify rgba", () => {
-    expect(opacify(`rgba((0, 128, 255, 0.2)), 0.5))
-    |> toEqual(`rgba((0, 128, 255, 0.7)))
+    expect(opacify(`rgba((0, 128, 255, `num(0.2))), 0.5))
+    |> toEqual(`rgba((0, 128, 255, `percent(70.0))))
   })
 });
 
@@ -206,13 +201,19 @@ describe("PolishedCss_Color.invert", () => {
 
 describe("PolishedCss_Color.mix", () => {
   test("mix two rgb and rgba colors", () => {
-    expect(mix(`rgb((0, 0, 0)), `rgba((255, 255, 255, 0.0)), 0.7))
-    |> toEqual(`rgba((0, 0, 0, 0.7)))
+    expect(mix(`rgb((0, 0, 0)), `rgba((255, 255, 255, `num(0.0))), 0.7))
+    |> toEqual(`rgba((0, 0, 0, `percent(70.0))))
   });
 
   test("mix two rgba colors", () => {
-    expect(mix(`rgba((0, 255, 128, 0.5)), `rgba((128, 0, 255, 0.5)), 0.5))
-    |> toEqual(`rgba((64, 127, 191, 0.5)))
+    expect(
+      mix(
+        `rgba((0, 255, 128, `percent(50.0))),
+        `rgba((128, 0, 255, `percent(50.0))),
+        0.5,
+      ),
+    )
+    |> toEqual(`rgba((64, 127, 191, `percent(50.0))))
   });
 });
 
@@ -232,11 +233,11 @@ describe("PolishedCss_Color.tint", () => {
 describe("PolishedCss_Color.setAlpha", () => {
   test("setAlpha of rgb", () => {
     expect(setAlpha(`rgb((0, 128, 255)), 0.5))
-    |> toEqual(`rgba((0, 128, 255, 0.5)))
+    |> toEqual(`rgba((0, 128, 255, `percent(50.0))))
   });
 
   test("setAlpha of rgba", () => {
-    expect(setAlpha(`rgba((0, 128, 255, 0.7)), 0.5))
-    |> toEqual(`rgba((0, 128, 255, 0.5)))
+    expect(setAlpha(`rgba((0, 128, 255, `percent(70.0))), 0.5))
+    |> toEqual(`rgba((0, 128, 255, `percent(50.0))))
   });
 });

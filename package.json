@@ -1,28 +1,22 @@
 {
-  "name": "root",
-  "version": "0.0.1-dev.0",
-  "description": "Reason native port of Polished library",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Rohea/re-polished.git"
-  },
   "scripts": {
-    "build": "bsb -make-world",
-    "clean": "bsb -clean-world",
+    "build": "./node_modules/bs-platform/bsb -make-world",
+    "clean": "./node_modules/bs-platform/bsb -clean-world",
     "test": "jest",
     "dev": "webpack-dev-server",
     "watch": "watchexec -w packages -w src -i lib -e re,rei yarn build"
   },
   "private": true,
   "workspaces": [
-    "@rohea/re-polished",
-    "@rohea/re-polished-bs-css"
+    "packages/polished",
+    "packages/polished-bs-css"
   ],
   "dependencies": {},
   "devDependencies": {
     "@glennsl/bs-jest": "~0.6.0",
     "reason-react": "~0.9.1",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "bs-css-emotion": "~2.1.0",
     "bs-platform": "~8.4.2",
     "gentype": "~3.41.0",

@@ -12,12 +12,19 @@
       "subdirs": true
     },
     {
+      "dir": "examples",
+      "subdirs": true,
+      "type": "dev"
+    },
+    {
       "dir": "__tests__",
-      "type": "dev",
-      "subdirs": true
+      "subdirs": true,
+      "type": "dev"
     }
   ],
   "bs-dependencies": [
+    "reason-react",
+    "@rohea/re-polished",
     "bs-css-emotion",
     "bs-css"
   ],
