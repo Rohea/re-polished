@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "RePolished bindings for bs-css",
   "license": "MIT",
+  "keywords": [
+    "rescript",
+    "bucklescript",
+    "bs-css",
+    "css",
+    "color"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Rohea/re-polished.git/packages/polished-bs-css"

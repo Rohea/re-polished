@@ -4,7 +4,7 @@
   "description": "ReScript port of Polished library for color manipulation",
   "license": "MIT",
   "keywords": [
-    "ReScript",
+    "rescript",
     "bucklescript",
     "color"
   ],
