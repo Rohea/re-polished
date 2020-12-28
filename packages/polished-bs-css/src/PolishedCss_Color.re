@@ -1,14 +1,18 @@
 module Utils = {
-  let cssPercentToPercent =
-      (percent: [ | `percent(float)]): Polished.Types.Percent.t =>
+  /**
+   * Resulting float is always in range 0.0-1.0
+   */
+  let cssPercentToFloat =
+      (percent: [< | `num(float) | `percent(float)]): float =>
     switch (percent) {
-    | `percent(f) => Polished.Types.Percent.make(f)
+    | `percent(f) => f *. 0.01 // TODO: Is this right?
+    | `num(f) => f
     };
 
-  let cssPercentToFloat = (percent: [ | `percent(float)]): float =>
-    switch (percent) {
-    | `percent(f) => f
-    };
+  let cssPercentToPercent =
+      (percent: [< | `num(float) | `percent(float)])
+      : Polished.Types.Percent.t =>
+    cssPercentToFloat(percent)->Polished.Types.Percent.make;
 
   let cssAngleToDegree = (angle: Css.Types.Angle.t): Polished.Types.Degree.t =>
     Polished.Types.(
@@ -25,17 +29,16 @@ module Utils = {
     Polished.Types.(
       switch (cssColor) {
       | `rgb(r, g, b) => Some(RGB(RGB.fromPrimitives(r, g, b)))
-      | `rgba(r, g, b, a) => Some(RGBA(RGBA.fromPrimitives(r, g, b, a)))
+      | `rgba(r, g, b, a) =>
+        Some(RGBA(RGBA.fromPrimitives(r, g, b, a->cssPercentToFloat)))
       | `hex(str) => Some(HEX(HEX.make(str)))
       | `hsl(h, s, l) =>
         Some(
           HSL(
             HSL.make(
               ~hue=cssAngleToDegree(h),
-              ~saturation=
-                Polished.Types.Percent.make(cssPercentToFloat(s) /. 100.0),
-              ~lightness=
-                Polished.Types.Percent.make(cssPercentToFloat(l) /. 100.0),
+              ~saturation=Polished.Types.Percent.make(cssPercentToFloat(s)),
+              ~lightness=Polished.Types.Percent.make(cssPercentToFloat(l)),
             ),
           ),
         )
@@ -44,15 +47,9 @@ module Utils = {
           HSLA(
             HSLA.make(
               ~hue=cssAngleToDegree(h),
-              ~saturation=
-                Polished.Types.Percent.make(cssPercentToFloat(s) /. 100.0),
-              ~lightness=
-                Polished.Types.Percent.make(cssPercentToFloat(l) /. 100.0),
-              ~alpha=
-                switch (a) {
-                | `num(f) => Percent.make(f)
-                | `percent(f) => Percent.make(f)
-                },
+              ~saturation=Polished.Types.Percent.make(cssPercentToFloat(s)),
+              ~lightness=Polished.Types.Percent.make(cssPercentToFloat(l)),
+              ~alpha=Polished.Types.Percent.make(cssPercentToFloat(a)),
             ),
           ),
         )
@@ -76,21 +73,21 @@ module Utils = {
           RGBA.red(rgba) |> Int8.asInt,
           RGBA.green(rgba) |> Int8.asInt,
           RGBA.blue(rgba) |> Int8.asInt,
-          RGBA.alpha(rgba) |> Percent.asFloat,
+          `percent((RGBA.alpha(rgba) |> Percent.asFloat) *. 100.0),
         )
       | HEX(hex) => Css.hex(HEX.asString(hex))
       | HSL(hsl) =>
         Css.hsl(
           Css.Types.Angle.deg(HSL.hue(hsl) |> Degree.asFloat),
-          (HSL.saturation(hsl) |> Percent.asFloat) *. 100.0,
-          (HSL.lightness(hsl) |> Percent.asFloat) *. 100.0,
+          `percent((HSL.saturation(hsl) |> Percent.asFloat) *. 100.0),
+          `percent((HSL.lightness(hsl) |> Percent.asFloat) *. 100.0),
         )
       | HSLA(hsla) =>
         Css.hsla(
           Css.Types.Angle.deg(HSLA.hue(hsla) |> Degree.asFloat),
-          (HSLA.saturation(hsla) |> Percent.asFloat) *. 100.0,
-          (HSLA.lightness(hsla) |> Percent.asFloat) *. 100.0,
-          `percent(HSLA.alpha(hsla) |> Percent.asFloat),
+          `percent((HSLA.saturation(hsla) |> Percent.asFloat) *. 100.0),
+          `percent((HSLA.lightness(hsla) |> Percent.asFloat) *. 100.0),
+          `percent((HSLA.alpha(hsla) |> Percent.asFloat) *. 100.0),
         )
       }
     );

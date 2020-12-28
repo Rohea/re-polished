@@ -1,38 +1,25 @@
 {
-  "name": "@rohea/re-polished",
+  "name": "monorepo-root",
   "reason": {
     "react-jsx": 3
   },
   "bsc-flags": [
     "-bs-super-errors"
   ],
-  "sources": [
-    {
-      "dir": "src",
-      "subdirs": true
-    },
-    {
-      "dir": "__tests__",
-      "type": "dev",
-      "subdirs": true
-    },
-    {
-      "dir": "examples",
-      "subdirs": true
-    }
+  "sources": [],
+  "pinned-dependencies": [
+    "@rohea/re-polished",
+    "@rohea/re-polished-bs-css"
   ],
   "bs-dependencies": [
+    "reason-react",
     "bs-css-emotion",
     "bs-css",
-    "reason-react"
+    "@rohea/re-polished",
+    "@rohea/re-polished-bs-css"
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest"
-  ],
-  "package-specs": [
-    {
-      "module": "commonjs"
-    }
   ],
   "suffix": ".bs.js",
   "refmt": 3

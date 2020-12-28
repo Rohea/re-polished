@@ -7,8 +7,10 @@ yarn-error.log
 .cache
 .jest-test-results.json
 /lib
+/**/lib
 /src/*.bs.js
 .bsb.lock
 .merlin
 yarn.lock
+package-lock.json
 dist
