@@ -12,11 +12,8 @@
     "type": "git",
     "url": "https://github.com/Rohea/re-polished.git"
   },
-  "scripts": {
-    "build": "bsb -make-world",
-    "watch": "bsb -make-world -w",
-    "clean": "bsb -clean-world",
-    "test": "jest"
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {}
 }
