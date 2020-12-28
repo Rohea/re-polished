@@ -1,6 +1,6 @@
 {
   "name": "@rohea/re-polished-bs-css",
-  "version": "0.0.1-dev.0",
+  "version": "0.1.0",
   "description": "RePolished bindings for bs-css",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/Rohea/re-polished.git/packages/polished-bs-css"
   },
   "dependencies": {
-    "@rohea/re-polished": "0.0.1-dev.0"
+    "@rohea/re-polished": "0.1.0"
   },
   "peerDependencies": {
     "bs-css": "~12.1.0,<13.0.0"

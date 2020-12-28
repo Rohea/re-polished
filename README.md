@@ -7,11 +7,10 @@ A reimplementation of the great [Polished](https://polished.js.org/) library in 
 
 ## Installation
 
-Add following line to your package.json, delete lock file and re-install dependencies.
 ```
-"@rohea/re-polished": "https://github.com/Rohea/re-polished.git#master",
+yarn add @rohea/re-polished-bs-css,
 ```
-Then add `@rohea/re-polished` to `bs-dependencies` in your `bsconfig.json`.
+Then add `@rohea/re-polished` and `@rohea/re-polished-bs-css` to `bs-dependencies` in your `bsconfig.json`.
 
 At some point there will probably be a proper release. Watch this space.
 
