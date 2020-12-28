@@ -41,4 +41,3 @@ New functions are added as soon as we need them or someone makes a nice pull req
 ## TODO
 
 - Add more functions
-- Possibly create a proper monorepo structure with published sub packages
