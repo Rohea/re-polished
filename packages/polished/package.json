@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rohea/re-polished.git/packages/polished"
+    "url": "https://github.com/Rohea/re-polished.git"
   },
   "scripts": {
     "build": "bsb -make-world",
