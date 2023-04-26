@@ -1,6 +1,6 @@
 {
   "name": "@rohea/re-polished",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ReScript port of Polished library for color manipulation",
   "license": "MIT",
   "keywords": [
