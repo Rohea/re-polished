@@ -23,12 +23,21 @@ let convertHEXtoRGB = (tuple: HEX.t): RGB.t =>
   };
 
 let convertRGBtoHEX = (rgb: RGB.t): HEX.t => {
+  let padStart = s =>
+    switch (s->Js.String2.length) {
+    | 0 => "00"
+    | 1 => "0" ++ s
+    | _ => s
+    };
+
   let red = rgb->RGB.red;
   let green = rgb->RGB.green;
   let blue = rgb->RGB.blue;
-  let strRed = Printf.sprintf("%02x", red->Int8.asInt);
-  let strGreen = Printf.sprintf("%02x", green->Int8.asInt);
-  let strBlue = Printf.sprintf("%02x", blue->Int8.asInt);
+  let strRed = red->Int8.asInt->Js.Int.toStringWithRadix(~radix=16)->padStart;
+  let strGreen =
+    green->Int8.asInt->Js.Int.toStringWithRadix(~radix=16)->padStart;
+  let strBlue =
+    blue->Int8.asInt->Js.Int.toStringWithRadix(~radix=16)->padStart;
   HEX.make(strRed ++ strGreen ++ strBlue);
 };
 
